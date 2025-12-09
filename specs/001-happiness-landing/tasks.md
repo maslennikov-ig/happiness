@@ -79,14 +79,19 @@
   → Artifacts: [types/index.ts](../../src/types/index.ts)
 
 ### Shared Hooks
-- [ ] T011 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useReducedMotion hook for prefers-reduced-motion detection in src/hooks/use-reduced-motion.ts
-- [ ] T012 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useIsMobile hook for responsive behavior in src/hooks/use-is-mobile.ts
-- [ ] T013 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useInitialLoad hook for preloader state management in src/hooks/use-initial-load.ts
+- [X] T011 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useReducedMotion hook for prefers-reduced-motion detection in src/hooks/use-reduced-motion.ts
+  → Artifacts: [use-reduced-motion.ts](../../src/hooks/use-reduced-motion.ts)
+- [X] T012 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useIsMobile hook for responsive behavior in src/hooks/use-is-mobile.ts
+  → Artifacts: [use-is-mobile.ts](../../src/hooks/use-is-mobile.ts)
+- [X] T013 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useInitialLoad hook for preloader state management in src/hooks/use-initial-load.ts
+  → Artifacts: [use-initial-load.ts](../../src/hooks/use-initial-load.ts)
 - [ ] T014 [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Create useSmoothScroll hook with Lenis + ScrollTrigger integration in src/hooks/use-smooth-scroll.ts
 
 ### Animation Infrastructure
-- [ ] T015 [PARALLEL-GROUP-4] [EXECUTOR: visual-effects-creator] Create Motion animation variants (fadeIn, slideUp, stagger, spring) in src/animations/variants.ts
-- [ ] T016 [PARALLEL-GROUP-4] [EXECUTOR: visual-effects-creator] Create GSAP timeline configurations (preloader, parallax, pinned scroll) in src/animations/timelines.ts
+- [X] T015 [PARALLEL-GROUP-4] [EXECUTOR: visual-effects-creator] Create Motion animation variants (fadeIn, slideUp, stagger, spring) in src/animations/variants.ts
+  → Artifacts: [variants.ts](../../src/animations/variants.ts)
+- [X] T016 [PARALLEL-GROUP-4] [EXECUTOR: visual-effects-creator] Create GSAP timeline configurations (preloader, parallax, pinned scroll) in src/animations/timelines.ts
+  → Artifacts: [timelines.ts](../../src/animations/timelines.ts)
 
 ### Shared Components
 - [ ] T017 [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create BrushStroke SVG component with stroke-dashoffset animation in src/components/shared/BrushStroke.tsx
