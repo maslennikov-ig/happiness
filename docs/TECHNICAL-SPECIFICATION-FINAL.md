@@ -1,7 +1,7 @@
 # Техническое задание: Лендинг "Happiness"
 
-> **Версия:** 2.0 (Финальная)
-> **Дата:** 2024-12-09
+> **Версия:** 2.1 (Финальная, версии обновлены)
+> **Дата:** 2025-12-09
 > **Статус:** Готово к Spec-Kit
 
 ---
@@ -28,15 +28,17 @@
 
 | Технология | Версия | Назначение |
 |------------|--------|------------|
-| Next.js | 14 LTS | Фреймворк (App Router) |
-| React | 18 LTS | UI библиотека |
-| TypeScript | 5.x | Типизация |
-| Tailwind CSS | 3.x | Стилизация |
-| Framer Motion | latest | UI анимации (hover, toggle, transitions) |
+| Next.js | 15.x | Фреймворк (App Router, Turbopack) |
+| React | 19.x | UI библиотека (Server Components стабильны) |
+| TypeScript | 5.7+ | Типизация |
+| Tailwind CSS | 4.x | Стилизация (новый CSS-first конфиг) |
+| Motion | latest | UI анимации — импорт: `motion/react` (бывш. Framer Motion) |
 | GSAP | 3.12+ | Scroll-анимации, timelines, SVG |
-| @gsap/react | 2.x | React интеграция GSAP |
+| @gsap/react | 2.x | React интеграция GSAP (useGSAP hook) |
 | SplitType | 0.3+ | Разбиение текста (бесплатная альтернатива SplitText) |
 | Lenis | 1.x | Smooth scroll |
+
+> **Важно о Motion:** Библиотека Framer Motion переименована в "Motion". Новый пакет: `motion`, импорт: `import { motion } from "motion/react"`. Для Next.js App Router оптимизированный импорт: `import * as motion from "motion/react-client"`.
 
 ### 2.2 Backend / Интеграции
 
@@ -57,6 +59,25 @@
 - Собственный сервер (Docker)
 - Домен: определится позже
 
+### 2.5 Важные изменения в версиях 2025
+
+**Tailwind CSS 4:**
+- CSS-first конфигурация (вместо JS-конфига)
+- Используй директиву `@config` для подключения JS-конфига при необходимости
+- Модификатор `!important` теперь в конце: `flex!` вместо `!flex`
+- `outline-none` переименован в `outline-hidden`
+- Минимальные браузеры: Safari 16.4+, Chrome 111+, Firefox 128+
+
+**React 19:**
+- Server Components стабильны
+- Новые хуки: `useActionState`, `useOptimistic`, `useFormStatus`
+- Полная поддержка Custom Elements
+- Actions для async операций в transitions
+
+**Next.js 15:**
+- Turbopack включён по умолчанию
+- App Router с React 19 canary
+
 ---
 
 ## 3. Архитектура анимаций
@@ -68,15 +89,18 @@
 | Роль | Библиотека | Задачи |
 |------|------------|--------|
 | **Director** | GSAP | Scroll-анимации, pinning, timelines, SVG path animation |
-| **Actor** | Framer Motion | Hover states, toggles, mount/unmount, layout transitions |
+| **Actor** | Motion | Hover states, toggles, mount/unmount, layout transitions |
 
 ### 3.2 Wrapper Pattern
 
 Избежание конфликтов между библиотеками:
 
 ```tsx
+// Используем motion/react для Next.js App Router
+import { motion } from "motion/react"
+
 <div ref={gsapRef}>           {/* GSAP: scroll entrance */}
-  <motion.div whileHover>     {/* Framer: interaction */}
+  <motion.div whileHover>     {/* Motion: interaction */}
     Content
   </motion.div>
 </div>
@@ -89,19 +113,20 @@
 | Прелоадер (brush + morph) | GSAP | Master Timeline, stroke-dashoffset |
 | Hero parallax | GSAP | ScrollTrigger, scrub: true |
 | Hero text reveal | GSAP + SplitType | Stagger, skewY |
-| Card hover | Framer Motion | whileHover, spring |
+| Card hover | Motion | whileHover, spring |
 | Card entrance | GSAP | ScrollTrigger batch |
 | Table flip/reveal | GSAP | Timeline, pin: true |
-| Diagnostic toggles | Framer Motion | layoutId, AnimatePresence |
+| Diagnostic toggles | Motion | layoutId, AnimatePresence |
 | Roadmap timeline | GSAP | ScrollTrigger, pin, Draggable |
-| Form reveals | Framer Motion | whileInView |
+| Form reveals | Motion | whileInView |
 
 ### 3.4 Обязательные практики
 
 1. **@gsap/react** — использовать `useGSAP` hook (не useEffect)
 2. **gsap.matchMedia()** — для responsive анимаций
 3. **Lenis lock** — блокировать scroll во время прелоадера
-4. **React 18** — useGSAP автоматически обрабатывает Strict Mode
+4. **React 19** — useGSAP автоматически обрабатывает Strict Mode
+5. **Motion imports** — использовать `motion/react` или `motion/react-client` для Next.js
 
 ---
 
@@ -167,7 +192,7 @@ Promise.all([
 | Text reveal | SplitType + GSAP stagger (y: 100, opacity: 0, skewY: 7, stagger: 0.05) |
 | Photo | Parallax на scroll (yPercent: -20) |
 | Brush stroke | Parallax с другой скоростью (создаёт глубину) |
-| CTA button | Framer Motion whileHover (scale, golden glow) |
+| CTA button | Motion whileHover (scale, golden glow) |
 
 **Mobile:**
 - Отключить mouse-move parallax
@@ -190,7 +215,7 @@ Promise.all([
 
 **Desktop анимации:**
 - Entrance: GSAP ScrollTrigger stagger (y: 100, opacity: 0, delay: i * 0.15)
-- Hover: Framer Motion (scale: 1.05, y: -5, gradient reveal)
+- Hover: Motion (scale: 1.05, y: -5, gradient reveal)
 
 **Mobile:**
 - Вертикальный стек
@@ -265,7 +290,7 @@ gsap.timeline({
 
 **Технология:**
 ```tsx
-// Framer Motion layoutId для sliding highlight
+// Motion layoutId для sliding highlight
 <motion.div layoutId="highlight" className="bg-gold/20" />
 ```
 
@@ -348,7 +373,7 @@ ${data.message}
 - Lazy load через next/dynamic (тяжёлый компонент)
 
 **Анимации:**
-- Sequential field reveals (Framer Motion whileInView)
+- Sequential field reveals (Motion whileInView)
 
 ---
 
@@ -499,7 +524,7 @@ happiness/
 │   │   ├── globals.css
 │   │   └── template.tsx        # AnimatePresence wrapper
 │   ├── components/
-│   │   ├── ui/                 # Atoms (Framer Motion)
+│   │   ├── ui/                 # Atoms (Motion)
 │   │   │   ├── Button.tsx
 │   │   │   ├── Card.tsx
 │   │   │   ├── Toggle.tsx
@@ -659,8 +684,8 @@ Professional woman portrait photography, age 35-45, confident genuine warm smile
 ## 12. План разработки
 
 ### Неделя 1: Фундамент + Вход
-- [ ] Настройка проекта (Next.js 14, Tailwind, ESLint, Prettier)
-- [ ] Установка зависимостей (GSAP, Framer Motion, SplitType, Lenis)
+- [ ] Настройка проекта (Next.js 15, Tailwind CSS 4, ESLint, Prettier)
+- [ ] Установка зависимостей (GSAP, Motion, SplitType, Lenis)
 - [ ] Дизайн-система (шрифты, цвета, базовые компоненты)
 - [ ] Прелоадер (brush stroke + text morph)
 - [ ] Hero секция (parallax, text reveal, photo integration)

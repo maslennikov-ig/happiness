@@ -150,3 +150,10 @@ Follow command-specific instructions. See `docs/Agents Ecosystem/AGENT-ORCHESTRA
 - Architecture: `docs/Agents Ecosystem/ARCHITECTURE.md`
 - Quality gates: `docs/Agents Ecosystem/QUALITY-GATES-SPECIFICATION.md`
 - Report templates: `docs/Agents Ecosystem/REPORT-TEMPLATE-STANDARD.md`
+
+## Active Technologies
+- TypeScript 5.7+, React 19.x + Tailwind CSS 4.x, GSAP 3.12+, Motion (ex-Framer Motion), Lenis 1.x, SplitType 0.3+ (001-happiness-landing)
+- N/A (Telegram for form data, no database) (001-happiness-landing)
+
+## Recent Changes
+- 001-happiness-landing: Added TypeScript 5.7+, React 19.x + Tailwind CSS 4.x, GSAP 3.12+, Motion (ex-Framer Motion), Lenis 1.x, SplitType 0.3+
