@@ -128,15 +128,24 @@
 
 ### Implementation for User Story 1
 
-- [ ] T025 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create brush stroke SVG asset (inline, golden #D4AF37) in src/assets/svg/brush-strokes/hero-stroke.tsx
-- [ ] T026 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Preloader component with GSAP Timeline (brush stroke draw + text morph "КОНТРОЛЬ" → "ТРАНСФОРМАЦИЯ" → "СВОБОДА") in src/components/sections/Preloader.tsx
-- [ ] T027 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Preloader logic: Resource-Gated Minimum Timer (min 2.5s, max 5s), Lenis lock/unlock in src/components/sections/Preloader.tsx
-- [ ] T028 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create Hero section layout (nadheader, title, manifest, CTA, handwritten signature, author photo) in src/components/sections/Hero.tsx
-- [ ] T029 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Hero text reveal animation with SplitType + GSAP stagger in src/components/sections/Hero.tsx
-- [ ] T030 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Hero parallax effects (photo + brush stroke) with GSAP ScrollTrigger in src/components/sections/Hero.tsx
-- [ ] T031 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create ScrollIndicator component with bounce animation (appears on Hero, hides on scroll) in src/components/shared/ScrollIndicator.tsx
-- [ ] T032 [US1] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Integrate Preloader and Hero into main page in src/app/page.tsx
-- [ ] T033 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Add prefers-reduced-motion support: disable/simplify animations when enabled in src/components/sections/Preloader.tsx and src/components/sections/Hero.tsx
+- [X] T025 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create brush stroke SVG asset (inline, golden #D4AF37) in src/assets/svg/brush-strokes/hero-stroke.tsx
+  → Artifacts: [hero-stroke.tsx](../../src/assets/svg/brush-strokes/hero-stroke.tsx)
+- [X] T026 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Preloader component with GSAP Timeline (brush stroke draw + text morph "КОНТРОЛЬ" → "ТРАНСФОРМАЦИЯ" → "СВОБОДА") in src/components/sections/Preloader.tsx
+  → Artifacts: [Preloader.tsx](../../src/components/sections/Preloader.tsx)
+- [X] T027 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Preloader logic: Resource-Gated Minimum Timer (min 2.5s, max 5s), Lenis lock/unlock in src/components/sections/Preloader.tsx
+  → Artifacts: [Preloader.tsx](../../src/components/sections/Preloader.tsx)
+- [X] T028 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create Hero section layout (nadheader, title, manifest, CTA, handwritten signature, author photo) in src/components/sections/Hero.tsx
+  → Artifacts: [Hero.tsx](../../src/components/sections/Hero.tsx)
+- [X] T029 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Hero text reveal animation with SplitType + GSAP stagger in src/components/sections/Hero.tsx
+  → Artifacts: [Hero.tsx](../../src/components/sections/Hero.tsx)
+- [X] T030 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Hero parallax effects (photo + brush stroke) with GSAP ScrollTrigger in src/components/sections/Hero.tsx
+  → Artifacts: [Hero.tsx](../../src/components/sections/Hero.tsx)
+- [X] T031 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create ScrollIndicator component with bounce animation (appears on Hero, hides on scroll) in src/components/shared/ScrollIndicator.tsx
+  → Artifacts: [ScrollIndicator.tsx](../../src/components/shared/ScrollIndicator.tsx)
+- [X] T032 [US1] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Integrate Preloader and Hero into main page in src/app/page.tsx
+  → Artifacts: [page.tsx](../../src/app/page.tsx)
+- [X] T033 [US1] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Add prefers-reduced-motion support: disable/simplify animations when enabled in src/components/sections/Preloader.tsx and src/components/sections/Hero.tsx
+  → Artifacts: [Preloader.tsx](../../src/components/sections/Preloader.tsx), [Hero.tsx](../../src/components/sections/Hero.tsx)
 
 **Checkpoint**: Preloader plays correctly, Hero reveals with animations, parallax works on scroll
 
