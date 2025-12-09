@@ -188,11 +188,16 @@
 
 ### Implementation for User Story 6
 
-- [ ] T042 [US6] [PARALLEL-GROUP-8] [EXECUTOR: mobile-fixes-implementer] Add responsive styles for Preloader (simplified animations, reduced motion) using Tailwind responsive classes
-- [ ] T043 [US6] [PARALLEL-GROUP-8] [EXECUTOR: mobile-fixes-implementer] Add responsive styles for Hero (stack layout, reduced parallax, no mouse-move effects) using gsap.matchMedia()
-- [ ] T044 [US6] [PARALLEL-GROUP-8] [EXECUTOR: mobile-fixes-implementer] Add responsive styles for Contact section (44px touch targets, keyboard-aware layout)
-- [ ] T045 [US6] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Add dvh units for mobile viewport handling in src/app/globals.css
-- [ ] T046 [US6] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Configure Lenis touchMultiplier for better mobile scroll responsiveness in src/hooks/use-smooth-scroll.ts
+- [X] T042 [US6] [PARALLEL-GROUP-8] [EXECUTOR: mobile-fixes-implementer] Add responsive styles for Preloader (simplified animations, reduced motion) using Tailwind responsive classes
+  → Artifacts: [Preloader.tsx](../../src/components/sections/Preloader.tsx) (already implemented with useReducedMotion)
+- [X] T043 [US6] [PARALLEL-GROUP-8] [EXECUTOR: mobile-fixes-implementer] Add responsive styles for Hero (stack layout, reduced parallax, no mouse-move effects) using gsap.matchMedia()
+  → Artifacts: [Hero.tsx](../../src/components/sections/Hero.tsx)
+- [X] T044 [US6] [PARALLEL-GROUP-8] [EXECUTOR: mobile-fixes-implementer] Add responsive styles for Contact section (44px touch targets, keyboard-aware layout)
+  → Artifacts: [globals.css](../../src/app/globals.css)
+- [X] T045 [US6] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Add dvh units for mobile viewport handling in src/app/globals.css
+  → Artifacts: [globals.css](../../src/app/globals.css)
+- [X] T046 [US6] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Configure Lenis touchMultiplier for better mobile scroll responsiveness in src/hooks/use-smooth-scroll.ts
+  → Artifacts: [use-smooth-scroll.ts](../../src/hooks/use-smooth-scroll.ts) (already implemented with touchMultiplier: 1.5)
 
 **Checkpoint**: All P1 stories work on mobile - Preloader, Hero, Contact form
 

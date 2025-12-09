@@ -98,33 +98,40 @@ export function Hero() {
     }
   }, { scope: sectionRef, dependencies: [prefersReducedMotion] })
   
-  // Parallax effect for photo and brush stroke
+  // Parallax effect for photo and brush stroke (desktop only)
   useGSAP(() => {
     if (prefersReducedMotion || !photoRef.current || !strokeRef.current) return
-    
-    // Photo parallax (moves slower than scroll)
-    gsap.to(photoRef.current, {
-      yPercent: -15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1, // Smooth scrubbing
-      },
+
+    // Use matchMedia to disable parallax on mobile for performance
+    const mm = gsap.matchMedia()
+
+    mm.add('(min-width: 1024px)', () => {
+      // Photo parallax (moves slower than scroll)
+      gsap.to(photoRef.current, {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1, // Smooth scrubbing
+        },
+      })
+
+      // Stroke parallax (moves faster than photo for depth)
+      gsap.to(strokeRef.current, {
+        yPercent: -25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.8, // Slightly faster scrubbing
+        },
+      })
     })
-    
-    // Stroke parallax (moves faster than photo for depth)
-    gsap.to(strokeRef.current, {
-      yPercent: -25,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.8, // Slightly faster scrubbing
-      },
-    })
+
+    return () => mm.revert()
   }, { scope: sectionRef, dependencies: [prefersReducedMotion] })
   
   // Smooth scroll to contact section

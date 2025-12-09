@@ -86,6 +86,38 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ==========================================================================
+   Mobile Viewport Handling
+   Uses dvh (dynamic viewport height) for proper mobile browser support
+   ========================================================================== */
+
+/* Full height sections - use dvh for mobile browsers */
+.min-h-screen-safe {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Touch-friendly targets (minimum 44px as per Apple HIG) */
+@media (max-width: 768px) {
+  button,
+  [role="button"],
+  input[type="submit"],
+  a {
+    min-height: 44px;
+  }
+}
+
+/* Keyboard-aware viewport */
+@supports (height: 100dvh) {
+  .h-screen {
+    height: 100dvh;
+  }
+
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
+
 /* Lenis integration - disable native scroll when Lenis is active */
 html.lenis,
 html.lenis body {
