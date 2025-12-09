@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SmoothScrollProvider } from '@/components/shared/SmoothScroll'
 import { Preloader } from '@/components/sections/Preloader'
 import { Hero } from '@/components/sections/Hero'
+import { Contact } from '@/components/sections/Contact'
 
 /**
  * Home Page
@@ -24,18 +25,7 @@ export default function HomePage() {
       {/* Main content */}
       <main>
         <Hero />
-
-        {/* Placeholder for future sections */}
-        <section id="contact" className="min-h-screen bg-bg-muted py-20">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="font-display text-4xl text-text-primary mb-4">
-              Контакты
-            </h2>
-            <p className="text-text-secondary">
-              Форма обратной связи будет здесь (Phase 4)
-            </p>
-          </div>
-        </section>
+        <Contact />
       </main>
     </SmoothScrollProvider>
   )
