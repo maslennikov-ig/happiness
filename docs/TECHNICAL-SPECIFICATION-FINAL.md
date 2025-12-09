@@ -716,4 +716,419 @@ Professional woman portrait photography, age 35-45, confident genuine warm smile
 
 ---
 
+## 15. Дополнения и уточнения
+
+### 15.1 Недостающие UI элементы
+
+#### Header / Навигация
+**Статус:** Требует уточнения у заказчика
+
+**Варианты:**
+1. **Без header** — чистый storytelling scroll (рекомендуется для иммерсивности)
+2. **Minimal header** — только логотип + CTA кнопка (появляется после Hero)
+3. **Full navigation** — sticky меню с якорями на секции
+
+**Рекомендация:** Вариант 2 — минимальный header, появляющийся после скролла Hero секции.
+
+#### Footer
+**Статус:** Требует уточнения у заказчика
+
+**Минимальный footer должен содержать:**
+- Копирайт: "© 2024 Happiness. Все права защищены."
+- Ссылка на политику конфиденциальности
+- Контактный email или Telegram
+
+**Опционально:**
+- Ссылки на соцсети (если есть)
+- Повтор CTA кнопки
+
+#### Scroll Indicator
+На Hero секции добавить анимированный индикатор "scroll down":
+- Минималистичная стрелка или линия
+- Subtle bounce анимация
+- Исчезает при начале скролла
+
+#### Back to Top
+Кнопка возврата наверх:
+- Появляется после скролла 50vh
+- Плавная анимация появления
+- Иконка стрелки вверх
+
+### 15.2 Иконки
+
+**Источник:** [Lucide Icons](https://lucide.dev/) (MIT license, React ready)
+
+| Карточка | Иконка Lucide |
+|----------|---------------|
+| КОМПАС | `<Compass />` |
+| ЗАЩИТА | `<Shield />` |
+| КОНТРОЛЬ | `<Gauge />` или `<Target />` |
+| ЗАБОТА | `<Heart />` или `<HandHeart />` |
+
+**Установка:**
+```bash
+pnpm add lucide-react
+```
+
+### 15.3 Form States (Контактная форма)
+
+#### Loading State
+```tsx
+<Button disabled={isLoading}>
+  {isLoading ? (
+    <>
+      <Loader2 className="animate-spin mr-2" />
+      Отправляем...
+    </>
+  ) : (
+    'Отправить заявку'
+  )}
+</Button>
+```
+
+#### Success State
+После успешной отправки:
+- Форма заменяется на сообщение благодарности
+- Текст: "Спасибо! Мы свяжемся с вами в ближайшее время."
+- Кнопка: "Выбрать время встречи" → Cal.com
+
+#### Error State
+При ошибке отправки:
+- Toast notification или inline error
+- Текст: "Не удалось отправить. Попробуйте ещё раз или напишите напрямую в Telegram."
+- Кнопка retry
+- Fallback ссылка на Telegram автора
+
+### 15.4 Технические детали
+
+#### Lenis + ScrollTrigger интеграция
+
+**Проблема:** ScrollTrigger может конфликтовать с custom scroll библиотеками.
+
+**Решение:** Использовать `scrollerProxy`:
+
+```typescript
+// hooks/use-smooth-scroll.ts
+import Lenis from 'lenis';
+import { useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function useSmoothScroll() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 1.5,
+    });
+
+    // Connect Lenis to ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
+  }, []);
+}
+```
+
+#### Safari iOS Specifics
+
+```css
+/* Smooth scroll на iOS */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prefix для SVG анимаций */
+.brush-stroke {
+  -webkit-stroke-dasharray: 1800;
+  -webkit-stroke-dashoffset: 1800;
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
+}
+```
+
+#### Preloader Timeout
+
+Если ресурсы грузятся слишком долго:
+
+```typescript
+const MAX_PRELOADER_TIME = 5000; // 5 seconds max
+
+Promise.race([
+  Promise.all([minTimer, assetLoad, fontLoad]),
+  new Promise(resolve => setTimeout(resolve, MAX_PRELOADER_TIME))
+]).then(() => revealContent());
+```
+
+### 15.5 Accessibility (A11y)
+
+#### Prefers Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+```typescript
+// hooks/use-reduced-motion.ts
+export function useReducedMotion() {
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  return reducedMotion;
+}
+```
+
+#### Color Contrast
+
+**Проблема:** Gold (#D4AF37) на белом фоне может не пройти WCAG AA (4.5:1).
+
+**Решение:**
+- Для текста использовать более тёмный gold: `#9A7B0A`
+- Gold (#D4AF37) использовать только для декоративных элементов
+- Проверить на [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+
+#### ARIA Labels
+
+```tsx
+// Прелоадер
+<div role="status" aria-live="polite" aria-label="Загрузка сайта">
+  <span className="sr-only">Загрузка...</span>
+</div>
+
+// Skip to content (для screen readers)
+<a href="#main-content" className="sr-only focus:not-sr-only">
+  Перейти к содержимому
+</a>
+
+// Main content
+<main id="main-content" tabIndex={-1}>
+  ...
+</main>
+```
+
+#### Heading Hierarchy
+
+```
+h1: "СПАСИБО, ЧТО ВЫБРАЛ СЕБЯ." (Hero - только один h1)
+h2: Заголовки секций (Философия, Трансформация, и т.д.)
+h3: Заголовки карточек, подразделов
+```
+
+### 15.6 Security
+
+#### Form Validation
+
+**Client-side (Zod + React Hook Form):**
+```typescript
+const formSchema = z.object({
+  name: z.string().min(2, 'Минимум 2 символа').max(100),
+  contact: z.string().min(5, 'Введите телефон или Telegram'),
+  message: z.string().max(1000, 'Максимум 1000 символов').optional(),
+});
+```
+
+**Server-side:** Повторная валидация в API route.
+
+#### Honeypot Anti-Spam
+
+```tsx
+// Скрытое поле, которое боты заполняют
+<input
+  type="text"
+  name="website"
+  className="hidden"
+  tabIndex={-1}
+  autoComplete="off"
+/>
+
+// В API: если website заполнен — это бот
+if (formData.website) {
+  return Response.json({ success: true }); // Fake success
+}
+```
+
+#### Rate Limiting
+
+```typescript
+// Простой in-memory rate limiter
+const submissions = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowMs = 60 * 1000; // 1 minute
+  const maxRequests = 3;
+
+  const timestamps = submissions.get(ip) || [];
+  const recent = timestamps.filter(t => now - t < windowMs);
+
+  if (recent.length >= maxRequests) return true;
+
+  submissions.set(ip, [...recent, now]);
+  return false;
+}
+```
+
+### 15.7 Environment Variables
+
+```bash
+# .env.example
+
+# Telegram Bot
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
+
+# Cal.com
+NEXT_PUBLIC_CALCOM_LINK=https://cal.com/username/event
+
+# Site URL (for OG tags)
+NEXT_PUBLIC_SITE_URL=https://happiness.example.com
+
+# Optional: Analytics (для будущего)
+# NEXT_PUBLIC_YM_ID=
+# NEXT_PUBLIC_GA_ID=
+```
+
+### 15.8 SEO Files
+
+#### robots.txt
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://happiness.example.com/sitemap.xml
+```
+
+#### sitemap.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://happiness.example.com/</loc>
+    <lastmod>2024-12-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+```
+
+#### Favicon Set
+Сгенерировать через [RealFaviconGenerator](https://realfavicongenerator.net/):
+- favicon.ico (16x16, 32x32)
+- apple-touch-icon.png (180x180)
+- favicon-32x32.png
+- favicon-16x16.png
+- site.webmanifest
+
+### 15.9 Политика конфиденциальности
+
+**Требуется** для соответствия 152-ФЗ (РФ) при сборе персональных данных.
+
+**Минимальное содержание:**
+- Какие данные собираются (имя, контакт)
+- Цель сбора (связь для консультации)
+- Как хранятся (Telegram)
+- Срок хранения
+- Права пользователя
+
+**Реализация:** Отдельная страница `/privacy` или модальное окно.
+
+---
+
+## 16. Открытые вопросы для заказчика
+
+| # | Вопрос | Варианты | Рекомендация |
+|---|--------|----------|--------------|
+| 1 | Header с навигацией? | Нет / Минимальный / Полный | Минимальный (появляется после Hero) |
+| 2 | Footer? | Нет / Минимальный / Полный | Минимальный (копирайт + privacy) |
+| 3 | Ссылки на соцсети? | Telegram / Instagram / Нет | Указать если есть |
+| 4 | Cal.com интеграция? | Inline embed / Popup / Redirect | Redirect (проще, надёжнее) |
+| 5 | Политика конфиденциальности? | Страница / Модальное окно | Страница /privacy |
+| 6 | Иконки для карточек? | Lucide (готовые) / Кастомные | Lucide Icons |
+| 7 | Допустимо использовать эмодзи? | Да / Нет / Заменить на иконки | Заменить на иконки |
+
+---
+
+## 17. Полные тексты контента
+
+### Экран 1: Манифест (Hero)
+
+**Надзаголовок:** ПРОЕКТ: ТВОЯ НОВАЯ РЕАЛЬНОСТЬ
+
+**Заголовок:** СПАСИБО, ЧТО ВЫБРАЛ СЕБЯ.
+
+**Манифест:**
+> «Ты выбрал быть Счастливым, Стабильным и в Благополучии.
+>
+> Ты привык быть сильным для всех. Привык держать удар. Но здесь тебе не нужно бороться. Выдыхай. Самое сложное позади.
+>
+> Главное решение уже принято. Ты перестал откладывать жизнь на потом. Всё остальное — это просто путь, и тебе не придется идти по нему в одиночку.
+>
+> **Теперь я рядом.**»
+
+**CTA:** Сделать первый шаг к себе
+
+**Подпись (handwritten):** Твой Взрослый создал безопасность. Твой Ребенок готов жить.
+
+### Экран 6: Что будет на встрече
+
+**Пункт 1:** СВЕРИМ КООРДИНАТЫ
+> Ты расскажешь свою текущую ситуацию (без прикрас), а я скажу честно: подходит ли тебе моя методика. Если я увижу, что тебе нужен другой специалист (например, психотерапевт), я прямо об этом скажу.
+
+**Пункт 2:** ПРОВЕРИМ "ХИМИЮ"
+> Наставник — это партнер на 3 месяца. Нам должно быть легко общаться. Мы поймем, совпадаем ли мы по ценностям и темпу.
+
+**Пункт 3:** НАМЕТИМ ПЕРВЫЕ ШАГИ
+> Даже если мы не пойдем в длительную работу, ты уйдешь с ясностью: что с тобой происходит и куда двигаться дальше.
+
+---
+
+## 18. Финальный чеклист готовности
+
+### От заказчика (блокирующие):
+- [ ] Фото автора (высокое качество)
+- [ ] Контент Roadmap по неделям
+- [ ] Telegram Bot (токен + chat_id)
+- [ ] Cal.com настроен
+- [ ] Ответы на вопросы из раздела 16
+
+### Ассеты (можно параллельно):
+- [ ] Brush stroke изображения сгенерированы (5 шт)
+- [ ] OG image сгенерирован
+- [ ] Favicon set подготовлен
+
+### Опциональные:
+- [ ] Домен зарегистрирован
+- [ ] SSL сертификат готов
+- [ ] Текст политики конфиденциальности
+
+---
+
 *Документ готов к преобразованию в Spec-Kit спецификацию.*
