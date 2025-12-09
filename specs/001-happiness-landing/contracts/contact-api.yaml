@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  title: Happiness Landing Page API
+  version: 1.0.0
+  description: Contact form submission API for Happiness landing page
+
+servers:
+  - url: /api
+    description: Next.js API routes
+
+paths:
+  /contact:
+    post:
+      summary: Submit contact form
+      description: |
+        Validates form data, checks rate limit, and sends message to Telegram.
+        Includes honeypot spam protection.
+      operationId: submitContact
+      tags:
+        - Contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+            examples:
+              valid:
+                summary: Valid submission
+                value:
+                  name: "Иван Петров"
+                  contact: "@ivanpetrov"
+                  message: "Хочу узнать больше о программе"
+              minimal:
+                summary: Minimal valid submission
+                value:
+                  name: "Мария"
+                  contact: "+7 999 123 45 67"
+      responses:
+        '200':
+          description: Form submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactSuccessResponse'
+              example:
+                success: true
+                message: "Заявка успешно отправлена"
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactErrorResponse'
+              examples:
+                validation:
+                  summary: Validation failed
+                  value:
+                    success: false
+                    error: "VALIDATION_ERROR"
+                    message: "Имя должно содержать минимум 2 символа"
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactErrorResponse'
+              example:
+                success: false
+                error: "RATE_LIMITED"
+                message: "Слишком много запросов. Попробуйте через минуту."
+        '500':
+          description: Server error (Telegram API failure)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactErrorResponse'
+              example:
+                success: false
+                error: "TELEGRAM_ERROR"
+                message: "Не удалось отправить сообщение. Попробуйте позже или напишите напрямую в Telegram."
+
+components:
+  schemas:
+    ContactRequest:
+      type: object
+      required:
+        - name
+        - contact
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+          description: User's name
+          example: "Иван Петров"
+        contact:
+          type: string
+          minLength: 5
+          description: Phone number or Telegram username
+          example: "@ivanpetrov"
+        message:
+          type: string
+          maxLength: 1000
+          description: Optional message about situation
+          example: "Хочу узнать больше о программе"
+        website:
+          type: string
+          maxLength: 0
+          description: Honeypot field - must be empty. Bots typically fill this.
+          example: ""
+
+    ContactSuccessResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+          const: true
+        message:
+          type: string
+          description: Success message for user
+          example: "Заявка успешно отправлена"
+
+    ContactErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+        - message
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          type: string
+          enum:
+            - VALIDATION_ERROR
+            - RATE_LIMITED
+            - TELEGRAM_ERROR
+            - UNKNOWN_ERROR
+          description: Error code for programmatic handling
+        message:
+          type: string
+          description: Human-readable error message in Russian
+          example: "Не удалось отправить сообщение"
+
+  securitySchemes: {}
+
+tags:
+  - name: Contact
+    description: Contact form operations

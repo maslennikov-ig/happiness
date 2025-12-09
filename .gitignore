@@ -1,141 +1,41 @@
-# ===================================================================
-# Claude Code Orchestrator Kit - .gitignore
-# ===================================================================
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# ===================================================================
-# Sensitive Files - NEVER COMMIT THESE
-# ===================================================================
-# Environment files with credentials
-.env.local
-.env.*.local
-*.env.local
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# MCP configuration (may contain secrets)
-.mcp.json
-.mcp.local.json
-.mcp.*.json
-!.mcp.example.json
+# testing
+/coverage
 
-# Allow MCP templates in mcp/ folder (no secrets, only ${VAR} placeholders)
-!mcp/
-!mcp/.mcp.*.json
+# next.js
+/.next/
+/out/
 
-# Local settings
-.claude/settings.local.json
+# production
+/build
 
-# ===================================================================
-# Temporary Files
-# ===================================================================
-# Claude Code temporary files
-.tmp/
-*.tmp
-.cache/
+# misc
+.DS_Store
+*.pem
 
-# Logs
-*.log
-logs/
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+.pnpm-debug.log*
 
-# ===================================================================
-# Dependencies
-# ===================================================================
-node_modules/
-.pnp
-.pnp.js
+# env files (can opt-in for committing if needed)
+.env*
 
-# ===================================================================
-# Build & Distribution
-# ===================================================================
-dist/
-build/
-out/
-.next/
-.nuxt/
-.vercel/
+# vercel
+.vercel
 
-# ===================================================================
-# Testing
-# ===================================================================
-coverage/
-.nyc_output/
-*.lcov
-
-# ===================================================================
-# OS Files
-# ===================================================================
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-*:Zone.Identifier
-
-# Linux
-*~
-.directory
-.Trash-*
-
-# ===================================================================
-# IDE & Editors
-# ===================================================================
-# VSCode
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-
-# JetBrains
-.idea/
-*.iml
-*.iws
-*.ipr
-
-# Vim
-*.swp
-*.swo
-*~
-
-# ===================================================================
-# Project Specific
-# ===================================================================
-# Git worktrees
-.worktrees/
-
-# Backup files
-*.backup
-*.bak
-*.old
-.claude/commands.backup.*/
-.specify.backup.*/
-
-# Archive files
-*.archive
-
-# Lock files (optional - uncomment if needed)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
-*.tgz
-
-# ===================================================================
-# Articles & Writing
-# ===================================================================
-# Article drafts and master prompts (not for publication)
-articles/
-
-# Content agents (temporary/helper agents for writing)
-.claude/agents/content/
-
-# ===================================================================
-# Spec-Kit Temporary
-# ===================================================================
-# Original spec-kit clone (for comparison)
-/tmp/spec-kit-comparison/
+# typescript
+*.tsbuildinfo
+next-env.d.ts

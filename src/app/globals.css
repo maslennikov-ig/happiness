@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Happiness Landing Page - Tailwind CSS 4 Configuration
+   Based on ТЗ section 5.2 Color Palette
+   ========================================================================== */
+
+@theme {
+  /* Background Colors */
+  --color-bg-primary: #fafaf9;
+  --color-bg-dark: #1c1c1c;
+  --color-bg-muted: #f5f5f4;
+
+  /* Text Colors */
+  --color-text-primary: #1c1c1c;
+  --color-text-secondary: #737373;
+  --color-text-muted: #a3a3a3;
+
+  /* Brand Colors - Golden */
+  --color-gold-primary: #d4af37;
+  --color-gold-muted: #c9b037;
+  --color-gold-text: #9a7b0a; /* WCAG AA compliant for text on white */
+  --color-gold-light: #f5e6c3;
+
+  /* Semantic Colors */
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* Font Families */
+  --font-display: 'Playfair Display', ui-serif, Georgia, serif;
+  --font-body: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-handwritten: 'Caveat', cursive;
+
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-preloader: 2500ms;
+
+  /* Spacing */
+  --spacing-section: 6rem;
+  --spacing-section-mobile: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.25);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Base Styles */
+:root {
+  --background: var(--color-bg-primary);
+  --foreground: var(--color-text-primary);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-gold-light);
+  color: var(--color-text-primary);
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid var(--color-gold-primary);
+  outline-offset: 2px;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Lenis integration - disable native scroll when Lenis is active */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
