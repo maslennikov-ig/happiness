@@ -85,7 +85,8 @@
   → Artifacts: [use-is-mobile.ts](../../src/hooks/use-is-mobile.ts)
 - [X] T013 [PARALLEL-GROUP-3] [EXECUTOR: fullstack-nextjs-specialist] Create useInitialLoad hook for preloader state management in src/hooks/use-initial-load.ts
   → Artifacts: [use-initial-load.ts](../../src/hooks/use-initial-load.ts)
-- [ ] T014 [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Create useSmoothScroll hook with Lenis + ScrollTrigger integration in src/hooks/use-smooth-scroll.ts
+- [X] T014 [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Create useSmoothScroll hook with Lenis + ScrollTrigger integration in src/hooks/use-smooth-scroll.ts
+  → Artifacts: [use-smooth-scroll.ts](../../src/hooks/use-smooth-scroll.ts)
 
 ### Animation Infrastructure
 - [X] T015 [PARALLEL-GROUP-4] [EXECUTOR: visual-effects-creator] Create Motion animation variants (fadeIn, slideUp, stagger, spring) in src/animations/variants.ts
