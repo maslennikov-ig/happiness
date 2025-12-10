@@ -246,8 +246,10 @@
 
 ### Implementation for User Story 5
 
-- [ ] T058 [US5] [PARALLEL-GROUP-10] [EXECUTOR: fullstack-nextjs-specialist] Add Cal.com redirect button to Contact success state (using NEXT_PUBLIC_CALCOM_LINK env var) in src/components/sections/Contact.tsx
-- [ ] T059 [US5] [PARALLEL-GROUP-10] [EXECUTOR: fullstack-nextjs-specialist] Add CTA button in Hero that scrolls to Contact or links to Cal.com as secondary action in src/components/sections/Hero.tsx
+- [X] T058 [US5] [PARALLEL-GROUP-10] [EXECUTOR: fullstack-nextjs-specialist] Add Cal.com redirect button to Contact success state (using NEXT_PUBLIC_CALCOM_LINK env var) in src/components/sections/Contact.tsx
+  → Artifacts: [Contact.tsx](../../src/components/sections/Contact.tsx) (already implemented in Phase 4)
+- [X] T059 [US5] [PARALLEL-GROUP-10] [EXECUTOR: fullstack-nextjs-specialist] Add CTA button in Hero that scrolls to Contact or links to Cal.com as secondary action in src/components/sections/Hero.tsx
+  → Artifacts: [Hero.tsx](../../src/components/sections/Hero.tsx) (already implemented: scrolls to Contact section)
 
 **Checkpoint**: Cal.com links work correctly from success state and optional CTA
 
