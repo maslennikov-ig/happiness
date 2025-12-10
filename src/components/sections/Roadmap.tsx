@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -171,6 +171,26 @@ export function Roadmap() {
     return () => mm.revert()
   }, { scope: sectionRef, dependencies: [prefersReducedMotion] })
 
+  /**
+   * Navigate to specific stage by index
+   * Smooth scroll to the corresponding section position
+   */
+  const navigateToStage = useCallback((index: number) => {
+    if (!scrollTriggerRef.current) return
+
+    // Calculate scroll position for target stage
+    const progress = index / (ROADMAP_STAGES.length - 1)
+    const start = scrollTriggerRef.current.start
+    const end = scrollTriggerRef.current.end
+    const targetScroll = start + (end - start) * progress
+
+    gsap.to(window, {
+      scrollTo: targetScroll,
+      duration: 0.8,
+      ease: 'power2.inOut'
+    })
+  }, [])
+
   // Keyboard navigation: left/right arrows (desktop only)
   useEffect(() => {
     if (prefersReducedMotion) return
@@ -188,27 +208,7 @@ export function Roadmap() {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentStage, prefersReducedMotion])
-
-  /**
-   * Navigate to specific stage by index
-   * Smooth scroll to the corresponding section position
-   */
-  const navigateToStage = (index: number) => {
-    if (!scrollTriggerRef.current) return
-
-    // Calculate scroll position for target stage
-    const progress = index / (ROADMAP_STAGES.length - 1)
-    const start = scrollTriggerRef.current.start
-    const end = scrollTriggerRef.current.end
-    const targetScroll = start + (end - start) * progress
-
-    gsap.to(window, {
-      scrollTo: targetScroll,
-      duration: 0.8,
-      ease: 'power2.inOut'
-    })
-  }
+  }, [currentStage, prefersReducedMotion, navigateToStage])
 
   /**
    * Handle stage card click/tap

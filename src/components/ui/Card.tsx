@@ -1,7 +1,7 @@
 'use client'
 
 import { forwardRef } from 'react'
-import { motion, type HTMLMotionProps } from 'motion/react'
+import { motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import { cardHover } from '@/animations/variants'
@@ -85,6 +85,7 @@ Card.displayName = 'Card'
  * Optional header area for the card.
  * Typically contains title or icon elements.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
@@ -106,6 +107,7 @@ CardHeader.displayName = 'CardHeader'
  *
  * Main content area of the card.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
@@ -122,6 +124,7 @@ CardContent.displayName = 'CardContent'
  * Centered icon area at the top of the card.
  * Adds consistent spacing and alignment for icons.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CardIconProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const CardIcon = forwardRef<HTMLDivElement, CardIconProps>(
@@ -150,6 +153,7 @@ CardIcon.displayName = 'CardIcon'
  * Title text for the card.
  * Uses display font with gold color.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CardTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement> {}
 
@@ -177,6 +181,7 @@ CardTitle.displayName = 'CardTitle'
  * Description text for the card.
  * Uses body font with muted color for readability.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CardDescriptionProps
   extends React.HTMLAttributes<HTMLParagraphElement> {}
 

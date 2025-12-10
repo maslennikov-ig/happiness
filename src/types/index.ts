@@ -343,6 +343,7 @@ export interface MotionPreference {
  * of required environment variables.
  */
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {
       /** Telegram bot token for API authentication */

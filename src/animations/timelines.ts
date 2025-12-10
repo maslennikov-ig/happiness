@@ -139,7 +139,7 @@ export function createPreloaderTimeline(
   config: PreloaderTimelineConfig = {}
 ): gsap.core.Timeline {
   const {
-    duration = 2.5,
+    // duration is used implicitly through other durations
     strokeDuration = 1.2,
     morphDuration = 0.6,
     fadeOutDuration = 0.5,

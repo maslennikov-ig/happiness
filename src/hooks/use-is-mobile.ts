@@ -41,7 +41,8 @@ export function useIsMobile(): boolean {
       `(max-width: ${MOBILE_BREAKPOINT - 1}px)`,
     )
 
-    // Set initial value
+    // Set initial value - intentional for media query sync
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobile(mediaQuery.matches)
 
     // Handler for media query changes

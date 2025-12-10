@@ -5,7 +5,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
-import { cn } from '@/lib/utils'
+// cn utility not needed in this component
 import { Button } from '@/components/ui/Button'
 import { HeroStroke } from '@/assets/svg/brush-strokes/hero-stroke'
 import { ScrollIndicator } from '@/components/shared/ScrollIndicator'

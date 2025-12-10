@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -60,6 +60,7 @@ export interface SmoothScrollReturn {
  */
 export function useSmoothScroll(options?: SmoothScrollOptions): SmoothScrollReturn {
   const lenisRef = useRef<Lenis | null>(null)
+  const [lenis, setLenis] = useState<Lenis | null>(null)
 
   // Initialize Lenis and sync with GSAP
   useEffect(() => {
@@ -67,25 +68,28 @@ export function useSmoothScroll(options?: SmoothScrollOptions): SmoothScrollRetu
     if (typeof window === 'undefined') return
 
     // Create Lenis instance with custom options
-    const lenis = new Lenis({
+    const lenisInstance = new Lenis({
       duration: options?.duration ?? 1.2,
       easing: options?.easing ?? ((t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))),
       touchMultiplier: options?.touchMultiplier ?? 1.5, // Better mobile responsiveness
       infinite: options?.infinite ?? false,
     })
 
-    lenisRef.current = lenis
+    lenisRef.current = lenisInstance
+    // Intentional - expose Lenis instance via state for consumers
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLenis(lenisInstance)
 
     // Sync Lenis with GSAP ticker (instead of using autoRaf)
     function update(time: number) {
-      lenis.raf(time * 1000)
+      lenisInstance.raf(time * 1000)
     }
 
     gsap.ticker.add(update)
     gsap.ticker.lagSmoothing(0) // Disable lag smoothing for better sync
 
     // Update ScrollTrigger on Lenis scroll
-    lenis.on('scroll', ScrollTrigger.update)
+    lenisInstance.on('scroll', ScrollTrigger.update)
 
     // Add lenis classes to html element for CSS styling
     document.documentElement.classList.add('lenis', 'lenis-smooth')
@@ -93,7 +97,8 @@ export function useSmoothScroll(options?: SmoothScrollOptions): SmoothScrollRetu
     // Cleanup on unmount
     return () => {
       gsap.ticker.remove(update)
-      lenis.destroy()
+      lenisInstance.destroy()
+      setLenis(null)
       document.documentElement.classList.remove('lenis', 'lenis-smooth', 'lenis-stopped')
     }
   }, [options?.duration, options?.easing, options?.touchMultiplier, options?.infinite])
@@ -127,7 +132,7 @@ export function useSmoothScroll(options?: SmoothScrollOptions): SmoothScrollRetu
   }, [])
 
   return {
-    lenis: lenisRef.current,
+    lenis,
     scrollTo,
     stop,
     start,

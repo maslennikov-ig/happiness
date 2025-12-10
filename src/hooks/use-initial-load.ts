@@ -12,6 +12,8 @@ export function useInitialLoad() {
     const hasLoadedBefore = sessionStorage.getItem(STORAGE_KEY) === 'true'
 
     if (hasLoadedBefore) {
+      // Intentional - sync with sessionStorage on mount
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoaded(true)
     }
   }, [])
