@@ -17,8 +17,9 @@ import Link from 'next/link'
  * - Hover states with gold accent
  */
 export function Footer() {
-  // Telegram contact link - replace 'username' with actual Telegram username
-  const telegramLink = 'https://t.me/username'
+  // Telegram contact link - configured via environment variable
+  const telegramUsername = process.env.NEXT_PUBLIC_TELEGRAM_USERNAME || 'username'
+  const telegramLink = `https://t.me/${telegramUsername}`
 
   return (
     <footer className="bg-bg-dark py-12 md:py-16" aria-labelledby="footer-heading">
@@ -61,7 +62,7 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm md:text-base">
           {/* Copyright */}
           <p className="text-white/70">
-            © 2024 Happiness. Все права защищены.
+            © {new Date().getFullYear()} Happiness. Все права защищены.
           </p>
 
           {/* Privacy Policy Link */}

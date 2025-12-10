@@ -153,7 +153,7 @@ export function Contact() {
                       <p className="text-sm text-text-muted">
                         Или напишите в{' '}
                         <a
-                          href="https://t.me/username"
+                          href={`https://t.me/${process.env.NEXT_PUBLIC_TELEGRAM_USERNAME || 'username'}`}
                           className="text-gold-text hover:underline transition-colors"
                           target="_blank"
                           rel="noopener noreferrer"

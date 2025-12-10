@@ -9,7 +9,6 @@
 
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { logger } from '@/lib/logger'
 
 // Register ScrollTrigger plugin (client-side only)
 if (typeof window !== 'undefined') {
@@ -364,7 +363,7 @@ export function createHorizontalScrollConfig(
     : items
 
   if (!containerEl || !itemsEl) {
-    logger.warn('Horizontal scroll: container or items not found')
+    console.warn('Horizontal scroll: container or items not found')
     return gsap.timeline()
   }
 
@@ -498,7 +497,7 @@ export function createProgressBarConfig(
     : progressBar
 
   if (!progressEl) {
-    logger.warn('Progress bar element not found')
+    console.warn('Progress bar element not found')
     return undefined
   }
 

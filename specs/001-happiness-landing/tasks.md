@@ -328,10 +328,23 @@
 - [ ] T082 [SEQUENTIAL] [EXECUTOR: performance-optimizer] Verify LCP < 2.5s, CLS < 0.1 using Lighthouse
 - [ ] T083 [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Add will-change optimization (apply only during animation, remove after) in animation components
 
+### Code Review Fixes (P1 - Before Launch)
+- [X] T087 [SEQUENTIAL] [EXECUTOR: MAIN] Replace hardcoded Telegram placeholder links with env variable in Contact.tsx and Footer.tsx
+  → Artifacts: [Contact.tsx](../../src/components/sections/Contact.tsx), [Footer.tsx](../../src/components/sections/Footer.tsx)
+- [X] T088 [SEQUENTIAL] [EXECUTOR: MAIN] Add NEXT_PUBLIC_TELEGRAM_USERNAME to .env.example
+  → Artifacts: [.env.example](../../.env.example), [types/index.ts](../../src/types/index.ts)
+
+### Code Review Improvements (P2 - Post Launch)
+- [X] T089 [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Add ErrorBoundary component for graceful error handling in src/components/shared/ErrorBoundary.tsx
+  → Artifacts: [ErrorBoundary.tsx](../../src/components/shared/ErrorBoundary.tsx), [page.tsx](../../src/app/page.tsx)
+- [X] T090 [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Create centralized scroll utility in src/lib/scroll-utils.ts (scrollToContact used in 3 places)
+  → Artifacts: [scroll-utils.ts](../../src/lib/scroll-utils.ts), [Hero.tsx](../../src/components/sections/Hero.tsx), [Diagnostic.tsx](../../src/components/sections/Diagnostic.tsx)
+
 ### Final Validation
-- [ ] T084 [SEQUENTIAL] [EXECUTOR: MAIN] Run quickstart.md validation (if created)
-- [ ] T085 [PARALLEL-GROUP-14] [EXECUTOR: MAIN] Test full user journey on desktop (Chrome, Firefox, Safari 16.4+)
-- [ ] T086 [PARALLEL-GROUP-14] [EXECUTOR: MAIN] Test full user journey on mobile (iOS Safari, Android Chrome)
+- [X] T091 [SEQUENTIAL] [EXECUTOR: MAIN] Run pnpm build and verify no errors
+  → Result: Build passed, ESLint passed
+- [ ] T092 [SEQUENTIAL] [EXECUTOR: MAIN] Test full user journey on desktop (Chrome, Firefox, Safari 16.4+)
+- [ ] T093 [SEQUENTIAL] [EXECUTOR: MAIN] Test full user journey on mobile (iOS Safari, Android Chrome)
 
 ---
 

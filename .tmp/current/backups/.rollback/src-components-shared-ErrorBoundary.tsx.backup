@@ -1,0 +1,133 @@
+'use client'
+
+import { Component, type ReactNode } from 'react'
+import { AlertTriangle, RefreshCw } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
+
+interface Props {
+  children: ReactNode
+  /** Optional fallback component to render on error */
+  fallback?: ReactNode
+}
+
+interface State {
+  hasError: boolean
+  error: Error | null
+}
+
+/**
+ * Error Boundary Component
+ *
+ * Catches JavaScript errors in child components and displays a fallback UI.
+ * Prevents entire app crashes from component-level errors.
+ *
+ * Features:
+ * - Graceful error handling with user-friendly message
+ * - Retry button to reset error state
+ * - Optional custom fallback UI
+ * - Production-safe (no stack traces exposed)
+ *
+ * @example
+ * ```tsx
+ * <ErrorBoundary>
+ *   <SomeComponentThatMightFail />
+ * </ErrorBoundary>
+ *
+ * // With custom fallback
+ * <ErrorBoundary fallback={<CustomErrorUI />}>
+ *   <SomeComponent />
+ * </ErrorBoundary>
+ * ```
+ */
+export class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // Log error to console in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('ErrorBoundary caught an error:', error, errorInfo)
+    }
+
+    // TODO: Add error reporting service integration (e.g., Sentry)
+  }
+
+  handleReset = () => {
+    this.setState({ hasError: false, error: null })
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Render custom fallback if provided
+      if (this.props.fallback) {
+        return this.props.fallback
+      }
+
+      // Default error UI
+      return (
+        <div
+          role="alert"
+          className="min-h-[400px] flex items-center justify-center p-8"
+        >
+          <div className="text-center max-w-md">
+            {/* Error icon */}
+            <div className="w-16 h-16 bg-error/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <AlertTriangle
+                className="w-8 h-8 text-error"
+                aria-hidden="true"
+              />
+            </div>
+
+            {/* Error message */}
+            <h2 className="font-display text-2xl text-text-primary mb-3">
+              Что-то пошло не так
+            </h2>
+            <p className="text-text-secondary mb-6">
+              Произошла ошибка при загрузке этого раздела. Попробуйте обновить
+              страницу или вернитесь позже.
+            </p>
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                variant="primary"
+                onClick={this.handleReset}
+                className="inline-flex items-center gap-2"
+              >
+                <RefreshCw className="w-4 h-4" aria-hidden="true" />
+                Попробовать снова
+              </Button>
+
+              <Button
+                variant="secondary"
+                onClick={() => window.location.reload()}
+              >
+                Обновить страницу
+              </Button>
+            </div>
+
+            {/* Debug info in development */}
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <details className="mt-8 text-left">
+                <summary className="text-sm text-text-muted cursor-pointer hover:text-text-secondary">
+                  Детали ошибки (только в разработке)
+                </summary>
+                <pre className="mt-2 p-4 bg-bg-muted rounded-lg text-xs text-error overflow-auto max-h-40">
+                  {this.state.error.message}
+                </pre>
+              </details>
+            )}
+          </div>
+        </div>
+      )
+    }
+
+    return this.props.children
+  }
+}

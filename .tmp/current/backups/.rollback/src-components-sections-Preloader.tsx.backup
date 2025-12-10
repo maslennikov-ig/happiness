@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 import { BrushStroke } from '@/components/shared/BrushStroke'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
 import { useSmoothScrollContext } from '@/components/shared/SmoothScroll'
-import { logger } from '@/lib/logger'
 
 /**
  * Preloader Component
@@ -186,7 +185,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!animationCompleteRef.current) {
-        logger.warn('Preloader: Safety timeout triggered at', MAX_DISPLAY_TIME, 'ms')
+        console.warn('Preloader: Safety timeout triggered at', MAX_DISPLAY_TIME, 'ms')
         handleComplete()
       }
     }, MAX_DISPLAY_TIME)

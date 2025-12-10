@@ -8,7 +8,6 @@
  */
 
 import { Lead } from '@/types';
-import { logger } from '@/lib/logger';
 
 /**
  * Result of Telegram send operation
@@ -52,7 +51,7 @@ export async function sendToTelegram(lead: Lead): Promise<TelegramResult> {
 
   // Validate environment variables
   if (!token || !chatId) {
-    logger.server.error('Telegram credentials not configured');
+    console.error('Telegram credentials not configured');
     return { success: false, error: 'Telegram not configured' };
   }
 
@@ -100,13 +99,13 @@ export async function sendToTelegram(lead: Lead): Promise<TelegramResult> {
 
     if (!response.ok) {
       const error = await response.text();
-      logger.server.error('Telegram API error:', error);
+      console.error('Telegram API error:', error);
       return { success: false, error: 'Failed to send message' };
     }
 
     return { success: true };
   } catch (error) {
-    logger.server.error('Telegram send error:', error);
+    console.error('Telegram send error:', error);
     return { success: false, error: 'Network error' };
   }
 }

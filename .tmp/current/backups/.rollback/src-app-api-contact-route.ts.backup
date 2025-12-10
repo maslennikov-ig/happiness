@@ -11,7 +11,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { contactFormSchema } from '@/lib/schemas';
 import { sendToTelegram } from '@/lib/telegram';
 import { checkRateLimit } from '@/lib/rate-limit';
-import { logger } from '@/lib/logger';
 import type { Lead, ContactResponse, ContactErrorResponse, ContactErrorCode } from '@/types';
 
 /**
@@ -106,7 +105,7 @@ export async function POST(
     const telegramResult = await sendToTelegram(lead);
 
     if (!telegramResult.success) {
-      logger.server.error('Telegram send failed:', telegramResult.error);
+      console.error('Telegram send failed:', telegramResult.error);
       return NextResponse.json(
         {
           success: false,
@@ -119,7 +118,7 @@ export async function POST(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    logger.server.error('Contact API error:', error);
+    console.error('Contact API error:', error);
     return NextResponse.json(
       {
         success: false,

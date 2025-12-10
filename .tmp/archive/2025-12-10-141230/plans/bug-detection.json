@@ -1,0 +1,32 @@
+{
+  "workflow": "bug-management",
+  "phase": "detection",
+  "phaseNumber": 1,
+  "config": {
+    "priority": "all",
+    "categories": [
+      "type-errors",
+      "runtime-errors",
+      "security",
+      "performance",
+      "dead-code",
+      "debug-code"
+    ],
+    "maxBugsPerRun": 1000
+  },
+  "validation": {
+    "required": ["report-exists", "build"],
+    "optional": ["tests"],
+    "notes": "type-check script not available - using build validation instead"
+  },
+  "nextAgent": "bug-hunter",
+  "timestamp": "2025-12-10T00:00:00Z",
+  "metadata": {
+    "createdBy": "bug-orchestrator",
+    "iteration": 1,
+    "maxIterations": 3,
+    "gitStatus": "dirty",
+    "modifiedFiles": 8,
+    "untrackedFiles": 6
+  }
+}

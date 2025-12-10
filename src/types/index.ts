@@ -350,6 +350,8 @@ declare global {
       TELEGRAM_BOT_TOKEN: string;
       /** Telegram chat ID for receiving form submissions */
       TELEGRAM_CHAT_ID: string;
+      /** Telegram username for direct messaging links */
+      NEXT_PUBLIC_TELEGRAM_USERNAME: string;
       /** Cal.com booking link for scheduling meetings */
       NEXT_PUBLIC_CALCOM_LINK: string;
       /** Public site URL for canonical links and metadata */

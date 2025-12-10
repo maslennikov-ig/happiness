@@ -5,11 +5,11 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
-// cn utility not needed in this component
 import { Button } from '@/components/ui/Button'
 import { HeroStroke } from '@/assets/svg/brush-strokes/hero-stroke'
 import { ScrollIndicator } from '@/components/shared/ScrollIndicator'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { scrollToElement, SECTION_IDS } from '@/lib/scroll-utils'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -136,8 +136,7 @@ export function Hero() {
   
   // Smooth scroll to contact section
   const handleCTAClick = () => {
-    const contactSection = document.getElementById('contact')
-    contactSection?.scrollIntoView({ behavior: 'smooth' })
+    scrollToElement(SECTION_IDS.CONTACT)
   }
   
   return (

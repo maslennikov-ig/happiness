@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { Toggle, ToggleGroup } from '@/components/ui/Toggle'
 import { useReducedMotion } from '@/hooks/use-reduced-motion'
+import { scrollToElement, SECTION_IDS } from '@/lib/scroll-utils'
 
 /**
  * Diagnostic Section Component
@@ -86,8 +87,7 @@ export function Diagnostic() {
 
   // Smooth scroll to contact section
   const handleCTAClick = () => {
-    const contactSection = document.getElementById('contact')
-    contactSection?.scrollIntoView({ behavior: 'smooth' })
+    scrollToElement(SECTION_IDS.CONTACT)
   }
 
   return (

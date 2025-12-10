@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { SmoothScrollProvider } from '@/components/shared/SmoothScroll'
+import { ErrorBoundary } from '@/components/shared/ErrorBoundary'
 import { Preloader } from '@/components/sections/Preloader'
 import { Hero } from '@/components/sections/Hero'
 import { Philosophy } from '@/components/sections/Philosophy'
@@ -34,12 +35,24 @@ export default function HomePage() {
 
       {/* Main content */}
       <main id="main-content">
-        <Hero />
-        <Philosophy />
-        <Transformation />
-        <Diagnostic />
-        <Roadmap />
-        <Contact />
+        <ErrorBoundary>
+          <Hero />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Philosophy />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Transformation />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Diagnostic />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Roadmap />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Contact />
+        </ErrorBoundary>
       </main>
 
       {/* Footer */}

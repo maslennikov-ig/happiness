@@ -1,0 +1,39 @@
+{
+  "workflow": "bug-management",
+  "phase": "verification",
+  "phaseNumber": 6,
+  "config": {
+    "priority": "all",
+    "categories": ["type-errors", "runtime-errors", "security", "performance", "dead-code", "debug-code"],
+    "baselineReport": "bug-hunting-report.md",
+    "maxBugsPerRun": 1000,
+    "verifyOnly": false
+  },
+  "validation": {
+    "required": ["report-exists", "validation-passed"],
+    "optional": ["no-new-bugs"]
+  },
+  "nextAgent": "bug-hunter",
+  "timestamp": "2025-12-10T14:30:00Z",
+  "metadata": {
+    "createdBy": "bug-orchestrator",
+    "iteration": 1,
+    "maxIterations": 3,
+    "verificationType": "post-fixing",
+    "previousFixingSessions": [
+      {
+        "priority": "medium",
+        "bugsFixed": 4,
+        "timestamp": "2025-12-10T13:45:00Z"
+      },
+      {
+        "priority": "low",
+        "bugsFixed": 1,
+        "bugsSkipped": 6,
+        "timestamp": "2025-12-10T14:05:00Z"
+      }
+    ],
+    "totalBugsFixed": 5,
+    "buildValidation": "passed"
+  }
+}

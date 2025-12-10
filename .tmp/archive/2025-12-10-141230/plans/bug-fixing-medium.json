@@ -1,0 +1,33 @@
+{
+  "workflow": "bug-management",
+  "phase": "fixing",
+  "phaseNumber": 2,
+  "config": {
+    "priority": "medium",
+    "maxBugsPerRun": 50,
+    "sourceReport": "bug-hunting-report.md"
+  },
+  "validation": {
+    "required": ["report-exists", "build"],
+    "optional": ["tests"],
+    "notes": "type-check script not available - using build validation instead"
+  },
+  "nextAgent": "bug-fixer",
+  "timestamp": "2025-12-10T00:00:00Z",
+  "metadata": {
+    "createdBy": "bug-orchestrator",
+    "iteration": 1,
+    "maxIterations": 3,
+    "stage": "medium",
+    "attempt": 1,
+    "maxAttempts": 3,
+    "bugsToFix": 4,
+    "bugsFound": {
+      "critical": 0,
+      "high": 0,
+      "medium": 4,
+      "low": 7,
+      "total": 11
+    }
+  }
+}
