@@ -139,3 +139,61 @@ html.lenis body {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
+/* ==========================================================================
+   Prefers Reduced Motion - T078
+   Global reset for users who prefer reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Safari iOS & Browser Compatibility - T079
+   Webkit-specific prefixes and iOS touch scrolling
+   ========================================================================== */
+
+/* Safari iOS smooth scrolling */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Safari SVG stroke animation prefixes */
+@supports (-webkit-appearance: none) {
+  .stroke-animate {
+    -webkit-stroke-dasharray: var(--stroke-dasharray);
+    -webkit-stroke-dashoffset: var(--stroke-dashoffset);
+  }
+}
+
+/* iOS input zoom prevention */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Safari-specific fixes for backdrop-filter */
+@supports (-webkit-backdrop-filter: blur(10px)) {
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .backdrop-blur-md {
+    -webkit-backdrop-filter: blur(12px);
+  }
+}

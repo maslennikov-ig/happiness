@@ -1,0 +1,8 @@
+# Robots.txt for Happiness Landing Page
+# https://happiness.example.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://happiness.example.com/sitemap.xml

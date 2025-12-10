@@ -9,6 +9,9 @@ import { Transformation } from '@/components/sections/Transformation'
 import { Diagnostic } from '@/components/sections/Diagnostic'
 import { Roadmap } from '@/components/sections/Roadmap'
 import { Contact } from '@/components/sections/Contact'
+import { Footer } from '@/components/sections/Footer'
+import { Header } from '@/components/shared/Header'
+import { BackToTop } from '@/components/shared/BackToTop'
 
 /**
  * Home Page
@@ -26,8 +29,11 @@ export default function HomePage() {
         <Preloader onComplete={() => setIsLoading(false)} />
       )}
 
+      {/* Header - appears after scrolling past Hero */}
+      <Header />
+
       {/* Main content */}
-      <main>
+      <main id="main-content">
         <Hero />
         <Philosophy />
         <Transformation />
@@ -35,6 +41,12 @@ export default function HomePage() {
         <Roadmap />
         <Contact />
       </main>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Back to top button - appears after 50vh scroll */}
+      <BackToTop />
     </SmoothScrollProvider>
   )
 }
