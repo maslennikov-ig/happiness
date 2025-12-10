@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { SmoothScrollProvider } from '@/components/shared/SmoothScroll'
 import { Preloader } from '@/components/sections/Preloader'
 import { Hero } from '@/components/sections/Hero'
+import { Philosophy } from '@/components/sections/Philosophy'
+import { Transformation } from '@/components/sections/Transformation'
+import { Diagnostic } from '@/components/sections/Diagnostic'
 import { Contact } from '@/components/sections/Contact'
 
 /**
@@ -25,6 +28,9 @@ export default function HomePage() {
       {/* Main content */}
       <main>
         <Hero />
+        <Philosophy />
+        <Transformation />
+        <Diagnostic />
         <Contact />
       </main>
     </SmoothScrollProvider>
