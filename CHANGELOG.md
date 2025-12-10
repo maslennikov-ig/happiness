@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2025-12-10
+
+### Added
+- **phase9**: add navigation, SEO, accessibility improvements (908f48c)
+- **us6**: add Footer component with Telegram contact link (b39d2d0)
+- **us3**: add Roadmap section with horizontal timeline (Phase 8) (4c49d69)
+- **us2**: add Philosophy, Transformation, Diagnostic sections (Phase 6) (bcfc0f2)
+
+### Fixed
+- resolve ESLint errors and improve React patterns (7de9ea1)
+
 ## [0.2.0] - 2025-12-09
 
 ### Added
