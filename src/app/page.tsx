@@ -7,6 +7,7 @@ import { Hero } from '@/components/sections/Hero'
 import { Philosophy } from '@/components/sections/Philosophy'
 import { Transformation } from '@/components/sections/Transformation'
 import { Diagnostic } from '@/components/sections/Diagnostic'
+import { Roadmap } from '@/components/sections/Roadmap'
 import { Contact } from '@/components/sections/Contact'
 
 /**
@@ -31,6 +32,7 @@ export default function HomePage() {
         <Philosophy />
         <Transformation />
         <Diagnostic />
+        <Roadmap />
         <Contact />
       </main>
     </SmoothScrollProvider>

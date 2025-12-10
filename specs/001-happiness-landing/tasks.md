@@ -263,11 +263,16 @@
 
 ### Implementation for User Story 3
 
-- [ ] T060 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create Roadmap section layout with timeline stages (placeholder content) in src/components/sections/Roadmap.tsx
-- [ ] T061 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Roadmap desktop horizontal timeline with GSAP ScrollTrigger pin, progress bar, and optional Draggable for direct interaction in src/components/sections/Roadmap.tsx
-- [ ] T062 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Roadmap mobile vertical stack with fade-in animations using gsap.matchMedia() in src/components/sections/Roadmap.tsx
-- [ ] T063 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Add Roadmap stage click/tap navigation (smooth scroll to stage) in src/components/sections/Roadmap.tsx
-- [ ] T064 [US3] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Integrate Roadmap section into main page (between Diagnostic and Contact) in src/app/page.tsx
+- [X] T060 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Create Roadmap section layout with timeline stages (placeholder content) in src/components/sections/Roadmap.tsx
+  → Artifacts: [Roadmap.tsx](../../src/components/sections/Roadmap.tsx)
+- [X] T061 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Roadmap desktop horizontal timeline with GSAP ScrollTrigger pin, progress bar, and optional Draggable for direct interaction in src/components/sections/Roadmap.tsx
+  → Artifacts: [Roadmap.tsx](../../src/components/sections/Roadmap.tsx)
+- [X] T062 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Implement Roadmap mobile vertical stack with fade-in animations using gsap.matchMedia() in src/components/sections/Roadmap.tsx
+  → Artifacts: [Roadmap.tsx](../../src/components/sections/Roadmap.tsx)
+- [X] T063 [US3] [SEQUENTIAL] [EXECUTOR: visual-effects-creator] Add Roadmap stage click/tap navigation (smooth scroll to stage) in src/components/sections/Roadmap.tsx
+  → Artifacts: [Roadmap.tsx](../../src/components/sections/Roadmap.tsx)
+- [X] T064 [US3] [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Integrate Roadmap section into main page (between Diagnostic and Contact) in src/app/page.tsx
+  → Artifacts: [page.tsx](../../src/app/page.tsx)
 
 **Checkpoint**: Roadmap shows horizontal on desktop, vertical on mobile, progress indicator works
 
