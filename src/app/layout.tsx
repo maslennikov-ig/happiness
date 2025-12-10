@@ -3,31 +3,31 @@ import { fontVariables } from '@/lib/fonts'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://happiness.example.com'),
-  title: 'Happiness - Программа трансформации для предпринимателей',
-  description: 'Персональная программа для успешных предпринимателей, которые хотят не просто жить — а проживать жизнь в полную силу. Освободитесь от выгорания и обретите внутреннюю свободу.',
-  keywords: ['трансформация', 'коучинг', 'предприниматели', 'выгорание', 'личностный рост', 'счастье'],
-  authors: [{ name: 'Happiness Program' }],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://architecture-happiness.ru'),
+  title: 'Архитектура Счастья — Программа трансформации для предпринимателей',
+  description: 'Персональная программа для успешных предпринимателей, которые хотят не просто жить — а проживать жизнь в полную силу. Позволь Ребёнку быть счастливым. Пусть Взрослый возьмёт за это ответственность.',
+  keywords: ['архитектура счастья', 'трансформация', 'коучинг', 'предприниматели', 'выгорание', 'личностный рост', 'счастье', 'наставничество'],
+  authors: [{ name: 'Архитектура Счастья' }],
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://happiness.example.com',
-    title: 'Happiness - Программа трансформации',
-    description: 'Персональная программа для успешных предпринимателей',
-    siteName: 'Happiness',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://architecture-happiness.ru',
+    title: 'Архитектура Счастья — Программа трансформации',
+    description: 'Позволь Ребёнку быть счастливым. Пусть Взрослый возьмёт за это ответственность.',
+    siteName: 'Архитектура Счастья',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Happiness - Программа трансформации',
+        alt: 'Архитектура Счастья — Программа трансформации',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Happiness - Программа трансформации',
-    description: 'Персональная программа для успешных предпринимателей',
+    title: 'Архитектура Счастья — Программа трансформации',
+    description: 'Позволь Ребёнку быть счастливым. Пусть Взрослый возьмёт за это ответственность.',
     images: ['/images/og-image.jpg'],
   },
   robots: {

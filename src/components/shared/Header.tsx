@@ -139,7 +139,7 @@ export function Header() {
                 )}
                 aria-label="Scroll to top"
               >
-                Happiness
+                Архитектура Счастья
               </button>
             </div>
 

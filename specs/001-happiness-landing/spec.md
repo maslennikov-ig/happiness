@@ -1,9 +1,9 @@
-# Feature Specification: Happiness Landing Page
+# Feature Specification: Архитектура Счастья Landing Page
 
 **Feature Branch**: `001-happiness-landing`
 **Created**: 2025-12-09
 **Status**: Draft
-**Input**: Premium landing page for personal transformation coaching program "Happiness" with WOW-effect animations, contact form to Telegram, and Cal.com booking integration
+**Input**: Premium landing page for personal transformation coaching program "Архитектура Счастья" with WOW-effect animations, contact form to Telegram, and Cal.com booking integration
 
 ---
 

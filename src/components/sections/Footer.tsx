@@ -4,7 +4,7 @@ import Link from 'next/link'
 /**
  * Footer Component
  *
- * Premium footer for Happiness landing page with:
+ * Premium footer for Архитектура Счастья landing page with:
  * - Logo and branding
  * - Telegram contact link
  * - Copyright information
@@ -33,7 +33,7 @@ export function Footer() {
           {/* Logo */}
           <div>
             <span className="font-display text-2xl md:text-3xl text-white">
-              Happiness
+              Архитектура Счастья
             </span>
           </div>
 
@@ -62,7 +62,7 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm md:text-base">
           {/* Copyright */}
           <p className="text-white/70">
-            © {new Date().getFullYear()} Happiness. Все права защищены.
+            © {new Date().getFullYear()} Архитектура Счастья. Все права защищены.
           </p>
 
           {/* Privacy Policy Link */}

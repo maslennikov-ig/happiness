@@ -1,6 +1,7 @@
 {
-  "name": "happiness-temp",
+  "name": "architecture-happiness",
   "version": "0.2.2",
+  "description": "Архитектура Счастья — Программа трансформации для предпринимателей",
   "private": true,
   "scripts": {
     "dev": "next dev",
