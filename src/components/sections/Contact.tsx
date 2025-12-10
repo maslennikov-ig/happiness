@@ -17,18 +17,21 @@ import { cn } from '@/lib/utils'
 const MEETING_POINTS: MeetingPoint[] = [
   {
     id: 'coordinates',
-    title: 'Сверим координаты',
-    description: 'Узнаю о ваших целях и текущей ситуации',
+    icon: '☕️',
+    title: 'МЫ СВЕРИМ КООРДИНАТЫ',
+    description: 'Ты расскажешь свою текущую ситуацию (без прикрас), а я скажу честно: подходит ли тебе моя методика. Если я увижу, что тебе нужен другой специалист (например, психотерапевт), я прямо об этом скажу.',
   },
   {
     id: 'chemistry',
-    title: 'Проверим химию',
-    description: 'Поймём, насколько комфортно нам работать вместе',
+    icon: '🤝',
+    title: 'ПРОВЕРИМ "ХИМИЮ"',
+    description: 'Наставник — это партнер на 3 месяца. Нам должно быть легко общаться. Мы поймем, совпадаем ли мы по ценностям и темпу.',
   },
   {
     id: 'steps',
-    title: 'Наметим первые шаги',
-    description: 'Составим план первых действий на пути к изменениям',
+    icon: '🔑',
+    title: 'НАМЕТИМ ПЕРВЫЕ ШАГИ',
+    description: 'Даже если мы не пойдем в длительную работу, ты уйдешь с ясностью: что с тобой происходит и куда двигаться дальше.',
   },
 ]
 
@@ -103,8 +106,7 @@ export function Contact() {
               Начните путь
             </h2>
             <p className="text-text-secondary mb-8 max-w-md">
-              Оставьте заявку, и я свяжусь с вами для бесплатной
-              диагностической встречи
+              Заполни короткую анкету. Это займет 2 минуты. Мой ассистент свяжется с тобой и подберет удобное время для созвона.
             </p>
 
             <AnimatePresence mode="wait">
@@ -233,7 +235,7 @@ export function Contact() {
                     isLoading={status === 'submitting'}
                     className="w-full"
                   >
-                    Оставить заявку
+                    Записаться на знакомство
                   </Button>
                 </motion.form>
               )}
@@ -243,25 +245,23 @@ export function Contact() {
           {/* Meeting Info Column */}
           <div className="lg:pt-16">
             <h3 className="font-display text-2xl text-text-primary mb-6">
-              Что будет на встрече
+              ЧТО БУДЕТ НА ЭТОЙ ВСТРЕЧЕ?
             </h3>
             <div className="space-y-6">
-              {MEETING_POINTS.map((point, index) => (
+              {MEETING_POINTS.map((point) => (
                 <div key={point.id} className="flex gap-4">
-                  {/* Number badge */}
+                  {/* Icon badge */}
                   <div
-                    className="flex-shrink-0 w-10 h-10 rounded-full bg-gold-light flex items-center justify-center"
+                    className="flex-shrink-0 w-10 h-10 rounded-full bg-gold-light flex items-center justify-center text-2xl"
                     aria-hidden="true"
                   >
-                    <span className="font-display text-gold-text font-bold">
-                      {index + 1}
-                    </span>
+                    {point.icon}
                   </div>
 
                   {/* Content */}
                   <div>
                     <h4 className="font-body font-semibold text-text-primary mb-1">
-                      {point.title}
+                      {point.icon} {point.title}
                     </h4>
                     <p className="text-text-secondary text-sm">
                       {point.description}

@@ -12,22 +12,25 @@ import { logger } from '@/lib/logger'
 /**
  * Preloader Component
  *
- * Displays an animated preloader with brush stroke and morphing text sequence.
+ * Displays an animated preloader with brush stroke and text transformation.
  * Features:
  * - Brush stroke draw animation (1.2s)
- * - Text morphing: КОНТРОЛЬ → ТРАНСФОРМАЦИЯ → СВОБОДА
+ * - Two-phase text sequence:
+ *   1. КОНТРОЛЬ. ДИСЦИПЛИНА. РЕЗУЛЬТАТ. (strict, during brush stroke)
+ *   2. ТЫ ГОТОВ ПРИНЯТЬ РЕШЕНИЕ СТАТЬ СЧАСТЛИВЫМ? (emotional, after brush stroke)
  * - Resource-gated minimum timer (2500ms minimum, 5000ms maximum)
  * - Smooth scroll locking during animation
  * - Full reduced motion support
  *
  * Animation sequence:
  * 1. Lock Lenis scroll
- * 2. Brush stroke draws
- * 3. Text cycles through three words with fade transitions
- * 4. Hold final word briefly
- * 5. Fade out entire preloader
- * 6. Unlock Lenis scroll
- * 7. Call onComplete callback
+ * 2. Show first text (strict)
+ * 3. Brush stroke draws
+ * 4. Transform to second text (emotional question)
+ * 5. Hold briefly
+ * 6. Fade out entire preloader
+ * 7. Unlock Lenis scroll
+ * 8. Call onComplete callback
  *
  * @example
  * ```tsx
@@ -40,8 +43,11 @@ interface PreloaderProps {
   onComplete?: () => void
 }
 
-/** Text sequence to display during preloader */
-const WORDS = ['КОНТРОЛЬ', 'ТРАНСФОРМАЦИЯ', 'СВОБОДА'] as const
+/** Text phases to display during preloader */
+const TEXT_PHASES = {
+  STRICT: 'КОНТРОЛЬ. ДИСЦИПЛИНА. РЕЗУЛЬТАТ.',
+  EMOTIONAL: 'ТЫ ГОТОВ ПРИНЯТЬ РЕШЕНИЕ СТАТЬ СЧАСТЛИВЫМ?',
+} as const
 
 /** Minimum display time in milliseconds (ensures smooth experience) */
 const MIN_DISPLAY_TIME = 2500
@@ -57,7 +63,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
   // State for component lifecycle
   const [isComplete, setIsComplete] = useState(false)
-  const [currentWord, setCurrentWord] = useState(0)
+  const [currentPhase, setCurrentPhase] = useState<'strict' | 'emotional'>('strict')
 
   // Accessibility and scroll control
   const prefersReducedMotion = useReducedMotion()
@@ -103,7 +109,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
   /**
    * Main animation timeline
-   * Orchestrates brush stroke and text morph sequence
+   * Orchestrates brush stroke and text transformation sequence
    */
   useGSAP(
     () => {
@@ -111,64 +117,41 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
       // Reduced motion: simplified experience
       if (prefersReducedMotion) {
-        setCurrentWord(2) // Show final word only
+        setCurrentPhase('emotional') // Show final text only
         setTimeout(handleComplete, 1000)
         return
       }
 
       const tl = gsap.timeline()
 
-      // Brush stroke animation happens automatically in BrushStroke component
-      // We just need to orchestrate the text sequence timing
-
-      // Word 1: КОНТРОЛЬ (appears during brush stroke)
+      // Phase 1: STRICT text appears and brush stroke draws (1.2s)
       tl.to(
         {},
         {
           duration: 1.2, // Wait for brush stroke to complete
-          onStart: () => setCurrentWord(0),
+          onStart: () => setCurrentPhase('strict'),
         }
       )
 
-      // Transition to word 2: ТРАНСФОРМАЦИЯ
+      // Transition from strict to emotional text
       tl.to(textRef.current, {
         opacity: 0,
         y: -20,
-        duration: 0.3,
+        duration: 0.4,
         ease: 'power2.in',
       })
-        .call(() => setCurrentWord(1))
+        .call(() => setCurrentPhase('emotional'))
         .to(
           textRef.current,
           {
             opacity: 1,
             y: 0,
-            duration: 0.3,
+            duration: 0.5,
             ease: 'power2.out',
           },
           '>'
         )
-        .to({}, { duration: 0.6 }) // Hold
-
-      // Transition to word 3: СВОБОДА
-      tl.to(textRef.current, {
-        opacity: 0,
-        y: -20,
-        duration: 0.3,
-        ease: 'power2.in',
-      })
-        .call(() => setCurrentWord(2))
-        .to(
-          textRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.3,
-            ease: 'power2.out',
-          },
-          '>'
-        )
-        .to({}, { duration: 0.3 }) // Hold final word
+        .to({}, { duration: 0.8 }) // Hold emotional question
 
       // Trigger completion handler
       tl.call(handleComplete)
@@ -220,16 +203,18 @@ export function Preloader({ onComplete }: PreloaderProps) {
         />
       </div>
 
-      {/* Morphing Text */}
+      {/* Transforming Text */}
       <span
         ref={textRef}
         className={cn(
-          'font-display text-3xl md:text-4xl',
-          'uppercase tracking-widest',
-          'text-text-primary'
+          'font-display text-2xl md:text-3xl lg:text-4xl',
+          'uppercase tracking-wider',
+          'text-text-primary text-center px-4 max-w-4xl',
+          currentPhase === 'strict' && 'tracking-widest',
+          currentPhase === 'emotional' && 'tracking-wide'
         )}
       >
-        {WORDS[currentWord]}
+        {currentPhase === 'strict' ? TEXT_PHASES.STRICT : TEXT_PHASES.EMOTIONAL}
       </span>
 
       {/* Screen reader announcement */}

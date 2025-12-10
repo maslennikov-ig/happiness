@@ -280,6 +280,8 @@ export type MeetingPointId = 'coordinates' | 'chemistry' | 'steps';
 export interface MeetingPoint {
   /** Unique point identifier */
   id: MeetingPointId;
+  /** Emoji icon representing the point */
+  icon: string;
   /** Point title (e.g., "СВЕРИМ КООРДИНАТЫ") */
   title: string;
   /** Full description text */

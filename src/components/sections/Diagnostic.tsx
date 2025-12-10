@@ -36,39 +36,49 @@ import { scrollToElement, SECTION_IDS } from '@/lib/scroll-utils'
 interface DiagnosticSignal {
   id: string
   title: string
+  subtitle?: string // Optional subtitle in parentheses (e.g., "СКУКА")
   description: string
+  signal: string // The actual signal text (italicized)
 }
 
 const DIAGNOSTIC_SIGNALS: DiagnosticSignal[] = [
   {
-    id: 'success-no-joy',
-    title: 'Успех есть, а радости нет',
+    id: 'groundhog-day',
+    title: 'ДЕНЬ СУРКА',
+    subtitle: 'СКУКА',
     description:
-      'Вы достигли многого, но это не приносит удовлетворения. Каждая цель кажется промежуточной, а радость от побед быстро улетучивается.',
+      'Ты просыпаешься, и тебе уже всё понятно наперед. Сценарий один: работа, дом, задачи. Внешне декорации меняются, доход растет, но драйва нет.',
+    signal:
+      'Твой Внутренний Ребенок перестал играть, потому что игра стала слишком серьезной.',
   },
   {
-    id: 'rest-no-restore',
-    title: 'Отдых не восстанавливает',
+    id: 'energy-deficit',
+    title: 'ЭНЕРГОДЕФИЦИТ',
     description:
-      'Даже после отпуска вы чувствуете себя разбитым. Выходные пролетают незаметно, а утро понедельника встречает усталостью.',
+      'У тебя есть амбиции, но к обеду батарейка садится. Ты «вывозишь» на силе воли и кофе. Выходные не восстанавливают, ты не живешь, а «отлеживаешься».',
+    signal: 'Взрослый тратит больше, чем успевает восполнять.',
   },
   {
-    id: 'impostor',
-    title: 'Чувствую себя самозванцем',
+    id: 'draft-life',
+    title: 'ЖИЗНЬ НА ЧЕРНОВИК',
     description:
-      'Несмотря на достижения, вы сомневаетесь в своей компетентности и боитесь разоблачения. Успех кажется случайностью.',
+      'Синдром «отложенного счастья». Кажется, что сейчас — репетиция. Настоящая жизнь начнется, когда заработаешь X денег, достроишь дом, вырастут дети.',
+    signal: 'Ты запрещаешь себе радость «здесь и сейчас».',
   },
   {
-    id: 'disconnected',
-    title: 'Близкие стали чужими',
+    id: 'glass-ceiling',
+    title: 'СТЕКЛЯННЫЙ ПОТОЛОК',
     description:
-      'Вы физически присутствуете, но эмоционально отстранены от семьи и друзей. Разговоры кажутся поверхностными, а связь — утраченной.',
+      'Ты уперся в стену. Делаешь больше действий, больше работаешь, но прорыва нет. Система не пускает тебя на новый уровень.',
+    signal:
+      'Ты пытаешься пробить стену головой, вместо того чтобы найти дверь (состояние легкости).',
   },
   {
-    id: 'lost-zest',
-    title: 'Потерял вкус к жизни',
+    id: 'others-game',
+    title: 'ЧУЖАЯ ИГРА',
     description:
-      'То, что раньше вдохновляло, теперь кажется пустым. Жизнь превратилась в монотонную рутину, а будущее не вызывает энтузиазма.',
+      'Внешне — успешный фасад. Внутри — ощущение, что ты проживаешь не свою жизнь и стал удобным для всех, кроме себя.',
+    signal: 'Маска приросла к лицу, контакт с настоящим «Я» потерян.',
   },
 ]
 
@@ -99,10 +109,10 @@ export function Diagnostic() {
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-text-primary mb-4">
-            Узнаёте себя?
+            ГДЕ ТЕРЯЕТСЯ ТВОЯ ЭНЕРГИЯ?
           </h2>
           <p className="font-body text-lg md:text-xl text-text-secondary max-w-2xl mx-auto">
-            Выберите то, что откликается. Это первый шаг к изменениям.
+            Честный чек-ап: найди пункты, в которых узнаешь себя.
           </p>
         </div>
 
@@ -115,6 +125,9 @@ export function Diagnostic() {
           >
             {DIAGNOSTIC_SIGNALS.map((signal) => {
               const isSelected = selectedSignals.includes(signal.id)
+              const displayTitle = signal.subtitle
+                ? `${signal.title} (${signal.subtitle})`
+                : signal.title
               return (
                 <Toggle
                   key={signal.id}
@@ -122,7 +135,7 @@ export function Diagnostic() {
                   onToggle={() => toggleSignal(signal.id)}
                   className="text-sm md:text-base"
                 >
-                  {signal.title}
+                  {displayTitle}
                 </Toggle>
               )
             })}
@@ -174,11 +187,16 @@ export function Diagnostic() {
                       'border-l-4 border-gold-primary'
                     )}
                   >
-                    <h4 className="font-display text-lg md:text-xl text-text-primary mb-2">
-                      {signal.title}
+                    <h4 className="font-display text-lg md:text-xl text-text-primary mb-3">
+                      {signal.subtitle
+                        ? `${signal.title} (${signal.subtitle})`
+                        : signal.title}
                     </h4>
-                    <p className="font-body text-text-secondary leading-relaxed">
+                    <p className="font-body text-text-secondary leading-relaxed mb-3">
                       {signal.description}
+                    </p>
+                    <p className="font-body text-text-secondary leading-relaxed italic text-sm border-l-2 border-gold-muted pl-3">
+                      {signal.signal}
                     </p>
                   </motion.div>
                 ))}
@@ -233,6 +251,16 @@ export function Diagnostic() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Summary Block - Always visible */}
+          <div className="mt-12 pt-8 border-t border-bg-muted">
+            <p className="font-body text-base md:text-lg text-text-secondary leading-relaxed text-center max-w-3xl mx-auto">
+              «Если ты узнал себя хотя бы в одном пункте — это не значит, что с
+              тобой что-то не так. Это значит, что твоя старая стратегия
+              перестала работать. Пришло время сменить топливо: с "Надо" на
+              "Хочу"».
+            </p>
+          </div>
         </div>
       </div>
     </section>

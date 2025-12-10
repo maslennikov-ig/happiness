@@ -39,26 +39,30 @@ const PHILOSOPHY_CARDS = [
   {
     id: 'compass',
     icon: Compass,
-    title: 'Понимание себя',
-    description: 'Научитесь слышать свои истинные потребности и желания'
+    title: 'КОМПАС',
+    subtitle: 'Задача Взрослого: Найти ответ на вопрос «Зачем?».',
+    description: 'Ребенок хочет играть, но ему важно знать правила игры. Мы найдем твой глубинный смысл. Когда Взрослый видит цель, Ребенок чувствует себя значимым и спокойным.'
   },
   {
     id: 'shield',
     icon: Shield,
-    title: 'Внутренняя опора',
-    description: 'Создайте фундамент эмоциональной устойчивости'
+    title: 'ЗАЩИТА',
+    subtitle: 'Задача Взрослого: Построить безопасные стены.',
+    description: 'Счастье хрупко, если нет базы. Мы укрепим 5 сфер твоей жизни (модель PERMA): отношения, вовлеченность, эмоции. Взрослый создает структуру, в которой Ребенку не страшно проявляться.'
   },
   {
     id: 'gauge',
     icon: Gauge,
-    title: 'Баланс',
-    description: 'Найдите гармонию между достижениями и отдыхом'
+    title: 'КОНТРОЛЬ',
+    subtitle: 'Задача Взрослого: Взять ответственность на себя.',
+    description: '40% твоего счастья — это твои действия. Взрослый перестает винить обстоятельства и берет пульт управления в свои руки. Ребенок расслабляется, зная, что «руль» в надежных руках.'
   },
   {
     id: 'heart',
     icon: Heart,
-    title: 'Самоценность',
-    description: 'Позвольте себе быть важным без условий'
+    title: 'ЗАБОТА',
+    subtitle: 'Задача Взрослого: Внедрять новое без насилия.',
+    description: 'Мы заменим жесткую дисциплину на бережные ритуалы. Взрослый не заставляет, а создает условия, в которых новые привычки становятся естественной игрой, а не тяжелой работой.'
   }
 ]
 
@@ -101,11 +105,11 @@ export function Philosophy() {
       <div className="container mx-auto px-4">
         {/* Section Title - T047 */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
-            Философия программы
+          <h2 className="font-display text-4xl md:text-5xl text-text-primary mb-4 uppercase">
+            ПОЗВОЛЬ РЕБЕНКУ БЫТЬ СЧАСТЛИВЫМ. ПУСТЬ ВЗРОСЛЫЙ ВОЗЬМЕТ ЗА ЭТО ОТВЕТСТВЕННОСТЬ.
           </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto font-body">
-            Четыре столпа, на которых строится ваша трансформация
+          <p className="text-text-secondary max-w-2xl mx-auto font-body text-lg md:text-xl">
+            Счастье — это когда внутри тебя нет войны.
           </p>
         </div>
 
@@ -128,6 +132,9 @@ export function Philosophy() {
                   <card.icon className="w-8 h-8 text-gold-primary" />
                 </CardIcon>
                 <CardTitle className="mt-4 mb-2">{card.title}</CardTitle>
+                <p className="text-text-secondary font-body text-sm md:text-base mb-3 font-semibold">
+                  {card.subtitle}
+                </p>
                 <CardDescription>{card.description}</CardDescription>
               </Card>
             </motion.div>

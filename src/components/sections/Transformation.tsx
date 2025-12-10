@@ -15,29 +15,19 @@ if (typeof window !== 'undefined') {
  */
 const TRANSFORMATIONS = [
   {
-    id: 1,
-    before: 'Вечная усталость и выгорание',
-    after: 'Энергия и осознанный темп жизни'
+    area: 'СЕМЬЯ',
+    before: 'Ранняя смерть матери. Нестабильная, токсичная мачеха. Отсутствие защиты и одиночество в родном доме.',
+    after: 'Полное отсутствие общения с токсичными людьми. Выстроенные, теплые отношения с отцом. Семья стала местом силы, а не полем битвы.'
   },
   {
-    id: 2,
-    before: 'Тревога о будущем',
-    after: 'Уверенность и спокойствие'
+    area: 'ОТНОШЕНИЯ',
+    before: 'Коллекция фраз, убивающих самооценку («Ты слишком хорошая», «Давай останемся друзьями»). Эмоциональные качели и зависимость.',
+    after: 'Выбор партнеров из позиции силы. Счастье — это мой внутренний навык, который больше не зависит от наличия кого-то рядом.'
   },
   {
-    id: 3,
-    before: 'Работа 24/7 без результата',
-    after: 'Продуктивность без надрыва'
-  },
-  {
-    id: 4,
-    before: 'Отношения на автопилоте',
-    after: 'Глубокие связи с близкими'
-  },
-  {
-    id: 5,
-    before: '«Надо» вместо «хочу»',
-    after: 'Жизнь по своим правилам'
+    area: 'БИЗНЕС',
+    before: 'Кассовые разрывы, долги, проблемы с налогами. Предательство бизнес-партнера. Рост через надрыв и кризисы.',
+    after: 'Самый сложный продукт на рынке залогового кредитования. Продано > 100 франшиз. Поток клиентов > 3500 в месяц. Рост через систему и спокойствие.'
   }
 ]
 
@@ -126,11 +116,11 @@ export function Transformation() {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-display text-4xl md:text-5xl text-text-primary mb-4">
-            История трансформации
+          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl text-text-primary mb-6 uppercase leading-tight">
+            Я потратила годы, чтобы перестать «бороться» с жизнью. И начать ею наслаждаться.
           </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto">
-            От того, как есть сейчас, к тому, как может быть
+          <p className="text-text-secondary text-lg md:text-xl max-w-3xl mx-auto">
+            Всё, что есть в этом проекте — это мой личный путь от тяжелых травм и бизнес-войн к состоянию абсолютной устойчивости.
           </p>
         </div>
 
@@ -162,11 +152,12 @@ export function Transformation() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12">
             {/* Before Column */}
             <div ref={beforeColRef} className="space-y-4">
-              {TRANSFORMATIONS.map((item) => (
+              {TRANSFORMATIONS.map((item, index) => (
                 <div
-                  key={`before-${item.id}`}
+                  key={`before-${index}`}
                   className="bg-white/50 rounded-lg p-4 md:p-6 text-center lg:text-right"
                 >
+                  <h3 className="font-display text-lg text-text-muted mb-3 uppercase">{item.area}</h3>
                   <p className="text-text-secondary font-body">{item.before}</p>
                 </div>
               ))}
@@ -174,15 +165,32 @@ export function Transformation() {
 
             {/* After Column */}
             <div ref={afterColRef} className="space-y-4">
-              {TRANSFORMATIONS.map((item) => (
+              {TRANSFORMATIONS.map((item, index) => (
                 <div
-                  key={`after-${item.id}`}
+                  key={`after-${index}`}
                   className="bg-white rounded-lg p-4 md:p-6 shadow-card text-center lg:text-left"
                 >
+                  <h3 className="font-display text-lg text-gold-text mb-3 uppercase">
+                    {item.area === 'БИЗНЕС' ? 'ДЕЛО ЖИЗНИ' : item.area}
+                  </h3>
                   <p className="text-text-primary font-body font-medium">{item.after}</p>
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Main Quote */}
+          <div className="mt-16 md:mt-24 text-center max-w-4xl mx-auto">
+            <blockquote className="font-display text-2xl md:text-3xl lg:text-4xl text-text-primary italic leading-relaxed">
+              «Больше нет необходимости падать на дно, чтобы совершить прорыв. Рост идет через стабильность, а не через кризис».
+            </blockquote>
+          </div>
+
+          {/* Footer Message */}
+          <div className="mt-12 md:mt-16 text-center">
+            <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto">
+              Я смогла изменить свой подход. Значит, сможешь и ты. Я здесь, чтобы сократить твой путь.
+            </p>
           </div>
         </div>
       </div>

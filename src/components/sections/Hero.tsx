@@ -151,26 +151,36 @@ export function Hero() {
           <div className="order-2 lg:order-1">
             {/* Nadheader - Small text above title */}
             <p className="text-gold-text text-sm md:text-base uppercase tracking-[0.3em] mb-4 font-body">
-              Программа трансформации
+              Проект: Твоя новая реальность
             </p>
-            
+
             {/* Main Title - Large display font */}
             <h1
               ref={titleRef}
               className="font-display text-5xl md:text-6xl lg:text-7xl text-text-primary mb-6 leading-[1.1]"
             >
-              Счастье как навык
+              Спасибо, что выбрал себя.
             </h1>
-            
-            {/* Manifest/Subtitle */}
-            <p
+
+            {/* Manifest/Subtitle - Multi-paragraph manifesto */}
+            <div
               ref={subtitleRef}
-              className="font-body text-lg md:text-xl text-text-secondary mb-8 max-w-lg leading-relaxed"
+              className="font-body text-lg md:text-xl text-text-secondary mb-8 max-w-lg leading-relaxed space-y-4"
             >
-              Персональная программа для успешных предпринимателей, 
-              которые хотят не просто жить — а проживать жизнь в полную силу
-            </p>
-            
+              <p>
+                Ты выбрал быть Счастливым, Стабильным и в Благополучии.
+              </p>
+              <p>
+                Ты привык быть сильным для всех. Привык держать удар. Но здесь тебе не нужно бороться. Выдыхай. Самое сложное позади.
+              </p>
+              <p>
+                Главное решение уже принято. Ты перестал откладывать жизнь на потом. Всё остальное — это просто путь, и тебе не придется идти по нему в одиночку.
+              </p>
+              <p className="font-medium">
+                Теперь я рядом.
+              </p>
+            </div>
+
             {/* CTA Button */}
             <div ref={ctaRef}>
               <Button
@@ -178,17 +188,14 @@ export function Hero() {
                 onClick={handleCTAClick}
                 aria-label="Scroll to contact form"
               >
-                Начать трансформацию
+                Сделать первый шаг к себе
               </Button>
             </div>
-            
+
             {/* Handwritten Signature */}
             <div className="mt-12 md:mt-16">
-              <p className="font-handwritten text-2xl md:text-3xl text-text-secondary">
-                С верой в ваш путь,
-              </p>
-              <p className="font-body text-sm text-text-muted mt-1">
-                Ваш наставник
+              <p className="font-handwritten text-2xl md:text-3xl text-text-secondary italic">
+                Твой Взрослый создал безопасность. Твой Ребенок готов жить.
               </p>
             </div>
           </div>
