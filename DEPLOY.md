@@ -4,18 +4,17 @@
 
 - Node.js 18+
 - PM2 (для управления процессами)
-- Nginx (для проксирования)
+- Caddy (для проксирования и SSL)
 
 ## Быстрый деплой
 
 ```bash
-# 1. Клонировать репозиторий (если еще не склонирован)
-git clone https://github.com/maslennikov-ig/happiness.git /home/me/code/happiness
-cd /home/me/code/happiness
+# 1. Перейти в папку проекта на сервере
+cd /path/to/happiness
 
 # 2. Настроить переменные окружения
 cp .env.example .env.local
-# Отредактировать .env.local с реальными данными
+nano .env.local  # заполнить реальными данными
 
 # 3. Собрать и запустить
 ./build.sh
@@ -36,50 +35,22 @@ NEXT_PUBLIC_CALCOM_LINK=https://cal.com/username/event
 NEXT_PUBLIC_SITE_URL=https://ah.aidevteam.ru
 ```
 
-## Nginx конфигурация
+## Caddy конфигурация
 
-Создать файл `/etc/nginx/sites-available/ah.aidevteam.ru`:
+Добавить в Caddyfile:
 
-```nginx
-server {
-    listen 80;
-    server_name ah.aidevteam.ru;
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name ah.aidevteam.ru;
-
-    ssl_certificate /etc/letsencrypt/live/ah.aidevteam.ru/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ah.aidevteam.ru/privkey.pem;
-
-    location / {
-        proxy_pass http://127.0.0.1:3001;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
+```caddyfile
+ah.aidevteam.ru {
+    reverse_proxy localhost:3000
 }
 ```
 
-Активировать:
+Перезагрузить Caddy:
 ```bash
-sudo ln -s /etc/nginx/sites-available/ah.aidevteam.ru /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
+sudo systemctl reload caddy
 ```
 
-## SSL сертификат (Let's Encrypt)
-
-```bash
-sudo certbot --nginx -d ah.aidevteam.ru
-```
+Caddy автоматически получит SSL сертификат от Let's Encrypt.
 
 ## Команды PM2
 
@@ -100,11 +71,10 @@ pm2 stop architecture-happiness
 ## Обновление
 
 ```bash
-cd /home/me/code/happiness
+cd /path/to/happiness
 ./scripts/deploy.sh
 ```
 
-## Порты
+## Порт
 
-- **Zalogium**: 3000
-- **Архитектура Счастья**: 3001
+- **Архитектура Счастья**: 3000

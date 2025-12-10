@@ -7,7 +7,7 @@ module.exports = {
       cwd: '/home/me/code/happiness',
       env: {
         NODE_ENV: 'production',
-        PORT: 3001, // Different port from zalogium
+        PORT: 3000,
       },
       instances: 1,
       autorestart: true,
