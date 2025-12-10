@@ -285,7 +285,8 @@
 ### Navigation & Layout
 - [ ] T065 [PARALLEL-GROUP-11] [EXECUTOR: nextjs-ui-designer] Create Header component (minimal, appears after Hero scroll) with logo and CTA in src/components/shared/Header.tsx
 - [ ] T066 [PARALLEL-GROUP-11] [EXECUTOR: nextjs-ui-designer] Create BackToTop button (appears after 50vh scroll) in src/components/shared/BackToTop.tsx
-- [ ] T067 [PARALLEL-GROUP-11] [EXECUTOR: nextjs-ui-designer] Create Footer component (copyright, privacy link, Telegram contact) in src/components/sections/Footer.tsx
+- [X] T067 [PARALLEL-GROUP-11] [EXECUTOR: nextjs-ui-designer] Create Footer component (copyright, privacy link, Telegram contact) in src/components/sections/Footer.tsx
+  → Artifacts: [Footer.tsx](../../src/components/sections/Footer.tsx)
 - [ ] T068 [SEQUENTIAL] [EXECUTOR: fullstack-nextjs-specialist] Integrate Header, BackToTop, Footer into main page layout in src/app/page.tsx
 
 ### Privacy & Legal
