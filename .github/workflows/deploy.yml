@@ -1,0 +1,69 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  DEPLOY_PATH: /var/www/happiness
+  CONTAINER_NAME: happiness
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
+            set -e
+
+            echo "=== Navigating to deploy directory ==="
+            cd ${{ env.DEPLOY_PATH }}
+
+            echo "=== Pulling latest code ==="
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "=== Building Docker image ==="
+            docker compose build --no-cache
+
+            echo "=== Restarting container ==="
+            docker compose down
+            docker compose up -d
+
+            echo "=== Waiting for container to be healthy ==="
+            sleep 10
+
+            echo "=== Checking container status ==="
+            docker compose ps
+
+            echo "=== Deployment complete ==="
+          ENDSSH
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://${{ secrets.SITE_DOMAIN }} || echo "000")
+          if [ "$STATUS" = "200" ]; then
+            echo "Site is up and running (HTTP $STATUS)"
+          else
+            echo "Warning: Site returned HTTP $STATUS"
+          fi
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key

@@ -257,8 +257,8 @@ export function Diagnostic() {
             <p className="font-body text-base md:text-lg text-text-secondary leading-relaxed text-center max-w-3xl mx-auto">
               «Если ты узнал себя хотя бы в одном пункте — это не значит, что с
               тобой что-то не так. Это значит, что твоя старая стратегия
-              перестала работать. Пришло время сменить топливо: с "Надо" на
-              "Хочу"».
+              перестала работать. Пришло время сменить топливо: с &quot;Надо&quot; на
+              &quot;Хочу&quot;».
             </p>
           </div>
         </div>

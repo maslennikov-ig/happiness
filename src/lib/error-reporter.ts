@@ -5,23 +5,41 @@
  * Currently logs to console in production, but can be easily integrated with
  * services like Sentry, LogRocket, Bugsnag, etc.
  *
- * Integration Instructions:
+ * PROJECT DECISION:
+ * For this landing page project, console-based error logging is INTENTIONALLY used.
+ * This is appropriate because:
+ * - Simple landing page with minimal complexity
+ * - Low user traffic and error rate expected
+ * - VPS deployment with direct server log access
+ * - Server logs accessible via Docker/PM2 (see scripts/deploy.sh)
+ * - Cost-effective approach for small projects
+ * - Can upgrade to Sentry if error monitoring needs increase
  *
- * 1. For Sentry:
+ * Server logs can be accessed via:
+ * - Docker: docker compose logs happiness
+ * - PM2: pm2 logs architecture-happiness
+ * - System logs: journalctl -u docker.service -f (if using systemd)
+ *
+ * Integration Instructions (if upgrading in future):
+ *
+ * 1. For Sentry (recommended for production apps):
  *    - Install: npm install @sentry/nextjs
  *    - Initialize in instrumentation.ts or _app.tsx
  *    - Uncomment Sentry code below
  *    - Add NEXT_PUBLIC_SENTRY_DSN to .env.local
+ *    - Free tier: 5,000 errors/month
  *
- * 2. For LogRocket:
+ * 2. For LogRocket (session replay + errors):
  *    - Install: npm install logrocket
  *    - Initialize in _app.tsx
  *    - Uncomment LogRocket code below
  *    - Add NEXT_PUBLIC_LOGROCKET_ID to .env.local
+ *    - Free tier: 1,000 sessions/month
  *
  * 3. For custom endpoint:
  *    - Implement reportToCustomEndpoint function
  *    - Add API endpoint for receiving errors
+ *    - Store in database or forward to monitoring service
  */
 
 import { logger } from '@/lib/logger'

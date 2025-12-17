@@ -26,15 +26,25 @@ function cleanupExpiredEntries(now: number): void {
  *
  * Uses sliding window algorithm with in-memory storage.
  *
- * IMPORTANT: This implementation is suitable for:
+ * DEPLOYMENT ARCHITECTURE DECISION:
+ * This application is deployed to a single VPS server (not serverless).
+ * In-memory rate limiting is INTENTIONALLY used and is appropriate for this architecture.
+ *
+ * Current deployment details:
+ * - Single server VPS with PM2/Docker
+ * - No horizontal scaling planned
+ * - Deployed at: https://archihappy.ru
+ * - Deployment method: See scripts/deploy.sh and .github/workflows/deploy.yml
+ *
+ * This implementation is suitable for:
  * - Development and testing
- * - Single-server deployments (e.g., standalone VPS)
+ * - Single-server deployments (current architecture) ✅
  *
- * NOT suitable for:
+ * NOT suitable for (would require Redis/distributed storage):
  * - Serverless/distributed deployments (Vercel, AWS Lambda, etc.)
- * - Horizontal scaling scenarios
+ * - Horizontal scaling scenarios with multiple instances
  *
- * For production serverless deployments, consider:
+ * If deployment architecture changes to serverless/multi-instance, consider:
  * - @upstash/ratelimit with Redis (recommended for Vercel)
  * - Vercel Edge Config
  * - Cloudflare Rate Limiting

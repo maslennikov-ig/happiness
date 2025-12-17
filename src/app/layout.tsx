@@ -3,7 +3,7 @@ import { fontVariables } from '@/lib/fonts'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://architecture-happiness.ru'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://archihappy.ru'),
   title: 'Архитектура Счастья — Программа трансформации для предпринимателей',
   description: 'Персональная программа для успешных предпринимателей, которые хотят не просто жить — а проживать жизнь в полную силу. Позволь Ребёнку быть счастливым. Пусть Взрослый возьмёт за это ответственность.',
   keywords: ['архитектура счастья', 'трансформация', 'коучинг', 'предприниматели', 'выгорание', 'личностный рост', 'счастье', 'наставничество'],
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://architecture-happiness.ru',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://archihappy.ru',
     title: 'Архитектура Счастья — Программа трансформации',
     description: 'Позволь Ребёнку быть счастливым. Пусть Взрослый возьмёт за это ответственность.',
     siteName: 'Архитектура Счастья',

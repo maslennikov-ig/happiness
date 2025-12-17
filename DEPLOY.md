@@ -32,7 +32,7 @@ TELEGRAM_BOT_TOKEN=your-bot-token
 TELEGRAM_CHAT_ID=your-chat-id
 NEXT_PUBLIC_TELEGRAM_USERNAME=your-username
 NEXT_PUBLIC_CALCOM_LINK=https://cal.com/username/event
-NEXT_PUBLIC_SITE_URL=https://ah.aidevteam.ru
+NEXT_PUBLIC_SITE_URL=https://archihappy.ru
 ```
 
 ## Caddy конфигурация
@@ -40,7 +40,7 @@ NEXT_PUBLIC_SITE_URL=https://ah.aidevteam.ru
 Добавить в Caddyfile:
 
 ```caddyfile
-ah.aidevteam.ru {
+archihappy.ru {
     reverse_proxy localhost:3000
 }
 ```

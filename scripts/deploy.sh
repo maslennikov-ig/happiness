@@ -27,4 +27,4 @@ if command -v pm2 &> /dev/null; then
 fi
 
 echo "✅ Deployment completed successfully!"
-echo "🌐 Site available at: https://ah.aidevteam.ru"
+echo "🌐 Site available at: https://archihappy.ru"

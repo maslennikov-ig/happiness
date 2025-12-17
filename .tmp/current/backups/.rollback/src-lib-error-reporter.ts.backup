@@ -24,6 +24,8 @@
  *    - Add API endpoint for receiving errors
  */
 
+import { logger } from '@/lib/logger'
+
 interface ErrorContext {
   componentStack?: string
   [key: string]: unknown
@@ -38,7 +40,7 @@ interface ErrorContext {
 export function reportError(error: Error, context?: ErrorContext): void {
   // In development, always log to console
   if (process.env.NODE_ENV === 'development') {
-    console.error('Error reported:', error, context)
+    logger.error('Error reported:', error, context)
     return
   }
 
@@ -68,13 +70,13 @@ export function reportError(error: Error, context?: ErrorContext): void {
   // Uncomment and implement when custom endpoint is ready
   /*
   reportToCustomEndpoint(error, context).catch(err => {
-    console.error('Failed to report error:', err)
+    logger.server.error('Failed to report error:', err)
   })
   */
 
   // Fallback: Log to console (production)
   // This ensures errors aren't silently lost
-  console.error('Error occurred:', {
+  logger.server.error('Error occurred:', {
     message: error.message,
     name: error.name,
     stack: error.stack,
