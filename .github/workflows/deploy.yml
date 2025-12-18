@@ -8,11 +8,66 @@ on:
 env:
   DEPLOY_PATH: /var/www/happiness
   CONTAINER_NAME: happiness
+  NODE_VERSION: '20'
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 
 jobs:
+  # Pre-flight checks before deployment
+  preflight:
+    name: Pre-flight Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run linting
+        run: pnpm lint
+
+      - name: Run type checking
+        run: pnpm exec tsc --noEmit
+
+      - name: Build application
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_TELEGRAM_USERNAME: placeholder
+          NEXT_PUBLIC_CALCOM_LINK: https://placeholder.com
+          NEXT_PUBLIC_SITE_URL: https://archihappy.ru
+
+      - name: Verify build output
+        run: |
+          if [ -d ".next" ]; then
+            echo "Build successful - .next directory exists"
+          else
+            echo "Build failed - .next directory not found"
+            exit 1
+          fi
+
+  # Deploy to production server
   deploy:
+    name: Deploy to Server
+    needs: preflight
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    environment: production
 
     steps:
       - name: Checkout code
@@ -26,6 +81,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to server
+        id: deploy
         run: |
           ssh -i ~/.ssh/deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
             set -e
@@ -40,30 +96,71 @@ jobs:
             echo "=== Building Docker image ==="
             docker compose build --no-cache
 
-            echo "=== Restarting container ==="
+            echo "=== Stopping old container ==="
             docker compose down
+
+            echo "=== Starting new container ==="
             docker compose up -d
 
-            echo "=== Waiting for container to be healthy ==="
-            sleep 10
+            echo "=== Waiting for container health check ==="
+            for i in {1..30}; do
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' ${{ env.CONTAINER_NAME }} 2>/dev/null || echo "starting")
+              if [ "$STATUS" = "healthy" ]; then
+                echo "Container is healthy!"
+                break
+              fi
+              if [ "$STATUS" = "unhealthy" ]; then
+                echo "Container is unhealthy!"
+                docker compose logs --tail=50
+                exit 1
+              fi
+              echo "Waiting for container to be healthy... ($i/30)"
+              sleep 5
+            done
 
-            echo "=== Checking container status ==="
+            echo "=== Container status ==="
             docker compose ps
 
             echo "=== Deployment complete ==="
           ENDSSH
 
       - name: Verify deployment
+        id: verify
         run: |
-          sleep 5
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://${{ secrets.SITE_DOMAIN }} || echo "000")
+          echo "Waiting for service to stabilize..."
+          sleep 10
+
+          # Check HTTP response
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 https://${{ secrets.SITE_DOMAIN }} || echo "000")
+
           if [ "$STATUS" = "200" ]; then
             echo "Site is up and running (HTTP $STATUS)"
+            echo "status=success" >> $GITHUB_OUTPUT
           else
             echo "Warning: Site returned HTTP $STATUS"
+            echo "status=warning" >> $GITHUB_OUTPUT
           fi
 
-      - name: Cleanup
+      - name: Cleanup SSH key
         if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+      - name: Notify success
+        if: success()
         run: |
-          rm -f ~/.ssh/deploy_key
+          echo "## Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Site**: https://${{ secrets.SITE_DOMAIN }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify failure
+        if: failure()
+        run: |
+          echo "## Deployment Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
